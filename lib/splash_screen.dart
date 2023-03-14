@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:musium/screens/welcome_screen.dart';
 
+import 'package:musium/screens/welcome_screen.dart';
 import 'package:musium/style/color_text.dart';
 import 'package:musium/style/colors.dart';
 
@@ -14,9 +14,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(milliseconds: 1500)).then((_) =>
+    Future.delayed(const Duration(milliseconds: 1500)).then((_) =>
         Navigator.pushReplacementNamed(context, WelcomeScreen.routeName));
   }
 
