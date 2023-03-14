@@ -5,6 +5,7 @@ import 'package:musium/style/colors.dart';
 class RegularText extends StatelessWidget {
   final String text;
   final double fontSize;
+  final TextAlign textAlign;
   final bool isMulish;
   final bool isLightColor;
   final bool isLightWeight;
@@ -12,6 +13,7 @@ class RegularText extends StatelessWidget {
     super.key,
     required this.text,
     this.fontSize = 16,
+    this.textAlign = TextAlign.left,
     this.isMulish = false,
     this.isLightColor = false,
     this.isLightWeight = false,
@@ -27,6 +29,7 @@ class RegularText extends StatelessWidget {
         fontWeight: isLightWeight ? FontWeight.w400 : FontWeight.bold,
         color: isLightColor ? AppColors.accentText : AppColors.mainText,
       ),
+      textAlign: textAlign,
     );
   }
 }
