@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musium/screens/sign_in_screen.dart';
 
 import 'package:musium/style/colors.dart';
 
@@ -12,36 +13,41 @@ class InfoColumnWelcomeScreen extends StatelessWidget {
     required this.index,
   }) : super(key: key);
 
+  void toSignInScreen(BuildContext context) {
+    Navigator.of(context).pushNamed(SignInScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // text
-        const TextWelcomeScreen(),
-        const SizedBox(height: 50),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          // text
+          const TextWelcomeScreen(),
+          const SizedBox(height: 50),
 
-        //dividers
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 53,
-              height: 10,
-              decoration: BoxDecoration(
-                color: index == 0 ? AppColors.mainBlue : AppColors.mainText,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(5),
-                ),
-                border: Border.all(
-                  color: Colors.black,
-                  width: 1,
+          //dividers
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 53,
+                height: 10,
+                decoration: BoxDecoration(
+                  color: index == 0 ? AppColors.mainBlue : AppColors.mainText,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 1,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              width: 53,
-              height: 10,
-              decoration: BoxDecoration(
+              Container(
+                width: 53,
+                height: 10,
+                decoration: BoxDecoration(
                   color: index == 1 ? AppColors.mainBlue : AppColors.mainText,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(5),
@@ -49,16 +55,22 @@ class InfoColumnWelcomeScreen extends StatelessWidget {
                   border: Border.all(
                     color: Colors.black,
                     width: 1,
-                  )),
-            )
-          ],
-        ),
-        const SizedBox(height: 40),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 40),
 
-        // button
-        const LongButton(text: 'Get Started'),
-      ],
+          // button
+          LongButton(
+            text: 'Get Started',
+            function: () {
+              toSignInScreen(context);
+            },
+          ),
+        ],
+      ),
     );
   }
 }
-

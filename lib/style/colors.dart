@@ -6,6 +6,8 @@ class AppColors {
   static const Color accentText = Color(0xFF8A9A9D);
 
   static const Color buttonColor = Color(0xFF06A0B5);
+  static const Color buttonFillColor = Color(0xff1E1E1E);
+  static const Color borderButtonColor = Color(0xffDBE7E8);
 
   // static const Color imgBgColor = Color(0xFF4ac4d9);
 

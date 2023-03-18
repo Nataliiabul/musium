@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musium/screens/sign_in_screen.dart';
 
 import 'package:musium/screens/welcome_screen.dart';
 import 'package:musium/splash_screen.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
       routes: {
         WelcomeScreen.routeName: (ctx) => const WelcomeScreen(),
+        SignInScreen.routeName: (ctx) => const SignInScreen(),
       },
     );
   }
