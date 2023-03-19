@@ -4,6 +4,9 @@ import 'package:musium/style/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:musium/style/regular_text.dart';
 import 'package:musium/widgets/long_button.dart';
+import 'package:musium/widgets/sign_in_screen/continue_with_button.dart';
+import 'package:musium/widgets/sign_in_screen/divider_or.dart';
+import 'package:musium/widgets/sign_in_screen/sign_up_text_and_button.dart';
 
 class SignInScreen extends StatefulWidget {
   static const routeName = '/signIn';
@@ -30,6 +33,7 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // back button
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -44,18 +48,23 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                   ),
+
+                  // logo
                   Container(
                     width: constraints.maxWidth,
                     height: constraints.maxHeight * 0.2,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(
-                            'assets/images/logo_box.png',
-                          ),
-                          fit: BoxFit.fitHeight),
+                        image: AssetImage(
+                          'assets/images/logo_box.png',
+                        ),
+                        fit: BoxFit.fitHeight,
+                      ),
                     ),
                   ),
                   SizedBox(height: constraints.maxHeight * 0.05),
+
+                  // text
                   const FittedBox(
                     child: RegularText(
                       text: 'Let’s get you in',
@@ -63,138 +72,38 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                   const SizedBox(height: 40),
-                  Container(
-                    height: 60,
+
+                  // continue with ... buttons
+                  ContinueWithButton(
                     width: constraints.maxWidth,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      border: Border.all(
-                          width: 1, color: AppColors.borderButtonColor),
-                      color: AppColors.buttonFillColor,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 33,
-                          width: 33,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/google.png'),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        const RegularText(text: 'Continue with Google')
-                      ],
-                    ),
+                    text: 'Continue with Google',
+                    imgPath: 'assets/images/google.png',
                   ),
                   const SizedBox(height: 17),
-                  Container(
-                    height: 60,
+                  ContinueWithButton(
                     width: constraints.maxWidth,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      border: Border.all(
-                          width: 1, color: AppColors.borderButtonColor),
-                      color: AppColors.buttonFillColor,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 33,
-                          width: 33,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/facebook.png'),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        const RegularText(text: 'Continue with Facebook')
-                      ],
-                    ),
+                    text: 'Continue with Facebook',
+                    imgPath: 'assets/images/facebook.png',
                   ),
                   const SizedBox(height: 17),
-                  Container(
-                    height: 60,
+                  ContinueWithButton(
                     width: constraints.maxWidth,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      border: Border.all(
-                          width: 1, color: AppColors.borderButtonColor),
-                      color: AppColors.buttonFillColor,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 33,
-                          width: 33,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/apple.png'),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        const RegularText(text: 'Continue with Apple')
-                      ],
-                    ),
+                    text: 'Continue with Apple',
+                    imgPath: 'assets/images/apple.png',
                   ),
                   const SizedBox(height: 40),
-                  Row(
-                    children: const [
-                      Expanded(
-                        child: Divider(
-                          color: AppColors.mainText,
-                          thickness: 1,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: RegularText(text: 'or', isMulish: true),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          color: AppColors.mainText,
-                          thickness: 1,
-                        ),
-                      ),
-                    ],
-                  ),
+
+                  // divider
+                  DividerOr(),
                   const SizedBox(height: 40),
+
+                  // log in with password button
                   LongButton(text: 'Log in with a password', function: () {}),
                   const SizedBox(height: 20),
-                  RichText(
-                    text: const TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Don’t have an account? ',
-                          style: TextStyle(
-                            fontFamily: 'Mulish',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.mainText,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'Sign Up',
-                          style: TextStyle(
-                            fontFamily: 'Mulish',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.mainBlue,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
+
+                  // sign up text & button
+                  const SignUpTextAndButton(),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
