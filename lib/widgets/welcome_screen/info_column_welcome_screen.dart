@@ -10,8 +10,10 @@ class InfoColumnWelcomeScreen extends StatelessWidget {
   final int index;
   const InfoColumnWelcomeScreen({
     Key? key,
-    required this.index,
+    required this.index, required this.width,
   }) : super(key: key);
+
+  final double width;
 
   void toSignInScreen(BuildContext context) {
     Navigator.of(context).pushNamed(SignInScreen.routeName);
@@ -65,6 +67,7 @@ class InfoColumnWelcomeScreen extends StatelessWidget {
           // button
           LongButton(
             text: 'Get Started',
+            width: width,
             function: () {
               toSignInScreen(context);
             },

@@ -7,18 +7,19 @@ class LongButton extends StatelessWidget {
   const LongButton({
     Key? key,
     required this.text,
-    required this.function,
+    required this.function, required this.width,
   }) : super(key: key);
 
   final String text;
   final VoidCallback function;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: function,
       child: Container(
-        width: double.infinity,
+        width: width * 0.85,
         padding: const EdgeInsets.symmetric(vertical: 17),
         decoration: BoxDecoration(
           color: AppColors.buttonColor,

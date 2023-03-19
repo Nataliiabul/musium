@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:musium/screens/sign_in_screen.dart';
 
+import 'package:musium/screens/log_in_screen.dart';
+import 'package:musium/screens/sign_in_screen.dart';
 import 'package:musium/screens/welcome_screen.dart';
 import 'package:musium/splash_screen.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         WelcomeScreen.routeName: (ctx) => const WelcomeScreen(),
         SignInScreen.routeName: (ctx) => const SignInScreen(),
+        LogInScreen.routeName: (ctx) => const LogInScreen(),
       },
     );
   }

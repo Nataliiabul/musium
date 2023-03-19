@@ -34,7 +34,7 @@ class CardWelcomeScreen extends StatelessWidget {
         itemCount: 2,
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: InfoColumnWelcomeScreen(index: index),
+          child: InfoColumnWelcomeScreen(width:width, index: index),
         ),
       ),
     );

@@ -5,24 +5,25 @@ import 'package:musium/style/regular_text.dart';
 
 class DividerOr extends StatelessWidget {
   const DividerOr({
-    super.key,
+    super.key, required this.text,
   });
+  final String text;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: const [
-        Expanded(
+      children: [
+        const Expanded(
           child: Divider(
             color: AppColors.mainText,
             thickness: 1,
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: RegularText(text: 'or', isMulish: true),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: RegularText(text: text, isMulish: true),
         ),
-        Expanded(
+        const Expanded(
           child: Divider(
             color: AppColors.mainText,
             thickness: 1,
