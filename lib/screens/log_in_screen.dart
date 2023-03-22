@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:musium/screens/home_screen.dart';
+import 'package:musium/screens/tabs_screen.dart';
+
 import 'package:musium/style/colors.dart';
 import 'package:musium/style/regular_text.dart';
+
 import 'package:musium/widgets/long_button.dart';
 import 'package:musium/widgets/sign_in_screen/divider_or.dart';
 import 'package:musium/widgets/sign_in_screen/sign_up_text_and_button.dart';
@@ -149,7 +154,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   //
                   Row(
                     children: [
-                       const SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Container(
                         width: 23,
                         height: 23,
@@ -183,7 +188,6 @@ class _LogInScreenState extends State<LogInScreen> {
                           scale: 1.2,
                           child: Checkbox(
                             activeColor: AppColors.background,
-                          
                             checkColor: AppColors.buttonColor,
                             value: isChecked,
                             onChanged: (bool? value) {
@@ -194,15 +198,22 @@ class _LogInScreenState extends State<LogInScreen> {
                           ),
                         ),
                       ),
-                     const SizedBox(width: 8),
+                      const SizedBox(width: 10),
                       const RegularText(
                         text: 'Remember me',
+                        fontSize: 14,
                       )
                     ],
                   ),
                   const SizedBox(height: 30),
 
-                  LongButton(text: 'Log in', width: constraints.maxWidth, function: () {}),
+                  LongButton(
+                      text: 'Log in',
+                      width: constraints.maxWidth,
+                      function: () {
+                        Navigator.of(context)
+                            .pushReplacementNamed(TabsScreen.routeName);
+                      }),
 
                   const SizedBox(height: 15),
                   OutlinedButton(
@@ -232,7 +243,8 @@ class _LogInScreenState extends State<LogInScreen> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(25)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(25)),
                           border: Border.all(
                               color: AppColors.borderButtonColor, width: 1),
                         ),
@@ -247,7 +259,8 @@ class _LogInScreenState extends State<LogInScreen> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(25)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(25)),
                           border: Border.all(
                               color: AppColors.borderButtonColor, width: 1),
                         ),
@@ -262,7 +275,8 @@ class _LogInScreenState extends State<LogInScreen> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(25)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(25)),
                           border: Border.all(
                               color: AppColors.borderButtonColor, width: 1),
                         ),
