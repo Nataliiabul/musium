@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class TrackItem {
   final String id;
   final String title;
@@ -16,8 +18,8 @@ class TrackItem {
   });
 }
 
-class Track {
-  static List tracks = [
+class Track with ChangeNotifier{
+  static final List _tracks = [
     TrackItem(
       id: '1',
       title: 'Raising Me Higher',
@@ -100,4 +102,8 @@ class Track {
       coverURL: '',
     ),
   ];
+
+  List get tracks {
+    return _tracks;
+  }
 }
