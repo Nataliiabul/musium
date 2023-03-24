@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:musium/screens/home_screen.dart';
 import 'package:musium/screens/tabs_screen.dart';
 
 import 'package:musium/style/colors.dart';
 import 'package:musium/style/regular_text.dart';
+import 'package:musium/widgets/log_in_screen/circle_continue_with_button.dart';
+import 'package:musium/widgets/log_in_screen/log_in_form.dart';
+import 'package:musium/widgets/log_in_screen/remember_box.dart';
 
 import 'package:musium/widgets/long_button.dart';
 import 'package:musium/widgets/sign_in_screen/divider_or.dart';
@@ -23,13 +25,6 @@ class _LogInScreenState extends State<LogInScreen> {
   void toSignInScreen() {
     Navigator.of(context).pop();
   }
-
-  final hintStyle = const TextStyle(
-    fontFamily: 'Century-Gothic',
-    fontSize: 16,
-    fontWeight: FontWeight.bold,
-    color: AppColors.mainText,
-  );
 
   bool isChecked = false;
 
@@ -86,127 +81,14 @@ class _LogInScreenState extends State<LogInScreen> {
                   SizedBox(height: constraints.maxHeight * 0.04),
 
                   // fields
-                  Form(
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                              fillColor: AppColors.buttonFillColor,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: AppColors.borderButtonColor,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              prefixIcon: SvgPicture.asset(
-                                  'assets/icons/mail.svg',
-                                  width: 15,
-                                  height: 15,
-                                  fit: BoxFit.scaleDown,
-                                  color: Colors.white.withOpacity(0.3)),
-                              hintText: 'Email',
-                              hintStyle: hintStyle),
-                          // validator: (value) {
-                          //   if (value!.isEmpty || value.length < 2) {
-                          //     return 'Некорректные данные!';
-                          //   }
-                          // },
-                          // onSaved: (value) {
-                          //   userEmail = value!;
-                          // },
-                        ),
-                        const SizedBox(height: 20),
-                        TextFormField(
-                          decoration: InputDecoration(
-                              fillColor: AppColors.buttonFillColor,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: AppColors.borderButtonColor,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              prefixIcon: SvgPicture.asset(
-                                  'assets/icons/lock.svg',
-                                  width: 15,
-                                  height: 15,
-                                  fit: BoxFit.scaleDown,
-                                  color: Colors.white.withOpacity(0.3)),
-                              hintText: 'Password',
-                              hintStyle: hintStyle),
-                          // validator: (value) {
-                          //   if (value!.isEmpty || value.length < 2) {
-                          //     return 'Некорректные данные!';
-                          //   }
-                          // },
-                          // onSaved: (value) {
-                          //   userEmail = value!;
-                          // },
-                        ),
-                      ],
-                    ),
-                  ),
+                  LogInForm(),
                   const SizedBox(height: 30),
 
-                  //
-                  Row(
-                    children: [
-                      const SizedBox(width: 8),
-                      Container(
-                        width: 23,
-                        height: 23,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          color: AppColors.background,
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.buttonColor,
-                              blurRadius: 3,
-                              offset: Offset(0, 2),
-                            ),
-                            BoxShadow(
-                              color: AppColors.buttonColor,
-                              blurRadius: 3,
-                              offset: Offset(0, -2),
-                            ),
-                            BoxShadow(
-                              color: AppColors.buttonColor,
-                              blurRadius: 3,
-                              offset: Offset(2, 0),
-                            ),
-                            BoxShadow(
-                              color: AppColors.buttonColor,
-                              blurRadius: 3,
-                              offset: Offset(-2, 0),
-                            ),
-                          ],
-                        ),
-                        child: Transform.scale(
-                          scale: 1.2,
-                          child: Checkbox(
-                            activeColor: AppColors.background,
-                            checkColor: AppColors.buttonColor,
-                            value: isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                isChecked = value!;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      const RegularText(
-                        text: 'Remember me',
-                        fontSize: 14,
-                      )
-                    ],
-                  ),
+                  // remember box
+                  RememberBox(isChecked: isChecked),
                   const SizedBox(height: 30),
 
+                  // log in
                   LongButton(
                       text: 'Log in',
                       width: constraints.maxWidth,
@@ -216,6 +98,8 @@ class _LogInScreenState extends State<LogInScreen> {
                       }),
 
                   const SizedBox(height: 15),
+
+                  // forgot password
                   OutlinedButton(
                     onPressed: () {},
                     child: const Text(
@@ -230,65 +114,21 @@ class _LogInScreenState extends State<LogInScreen> {
                   ),
                   const SizedBox(height: 20),
 
-                  //
+                  // divider
                   const DividerOr(text: 'or continue with'),
                   const SizedBox(height: 30),
 
-                  //
+                  // continue with circle buttons
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(25)),
-                          border: Border.all(
-                              color: AppColors.borderButtonColor, width: 1),
-                        ),
-                        child: const CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/images/google.png'),
-                          backgroundColor: AppColors.background,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(25)),
-                          border: Border.all(
-                              color: AppColors.borderButtonColor, width: 1),
-                        ),
-                        child: const CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/images/facebook.png'),
-                          backgroundColor: AppColors.background,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(25)),
-                          border: Border.all(
-                              color: AppColors.borderButtonColor, width: 1),
-                        ),
-                        child: const CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/images/apple.png'),
-                          backgroundColor: AppColors.background,
-                        ),
-                      ),
+                      CircleContinueWithButton(imgPath: 'assets/images/google.png'),
+                      CircleContinueWithButton(imgPath: 'assets/images/facebook.png'),
+                      CircleContinueWithButton(imgPath: 'assets/images/apple.png'),
                     ],
                   ),
 
+                  // sign up
                   const SizedBox(height: 15),
                   const SignUpTextAndButton(),
                 ],

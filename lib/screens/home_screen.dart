@@ -30,6 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
+                  //
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -68,6 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   const SizedBox(height: 40),
+
+                  //
                   const RegularText(text: 'Music Tracks', fontSize: 20),
                   const SizedBox(height: 20),
 
@@ -98,20 +102,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               SizedBox(width: constraints.maxWidth * 0.07),
-                             
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  RegularText(text: trackItem.title, fontSize: 17),
-                                  SizedBox(height: 5),
-                                  RegularText(text: trackItem.author, fontSize: 14, isLightColor: true,)
+                                  RegularText(
+                                      text: trackItem.title, fontSize: 17),
+                                  const SizedBox(height: 5),
+                                  RegularText(
+                                    text: trackItem.author,
+                                    fontSize: 14,
+                                    isLightColor: true,
+                                  )
                                 ],
                               )
                             ],
                           ),
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                       ],
                     );
                   }).toList(),
