@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:musium/models/track.dart';
 import 'package:musium/style/colors.dart';
 import 'package:musium/style/regular_text.dart';
+
+import 'package:musium/widgets/home_screen/header_home_screen.dart';
+import 'package:musium/widgets/home_screen/track_block.dart';
 
 import 'package:provider/provider.dart';
 
@@ -30,98 +32,20 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-                  //
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const CircleAvatar(
-                        backgroundColor: AppColors.lightBlue,
-                        radius: 23,
-                      ),
-                      const SizedBox(width: 15),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          RegularText(
-                            text: 'Welcome back!',
-                            fontSize: 15,
-                          ),
-                          RegularText(
-                            text: 'username',
-                            fontSize: 13,
-                            isLightColor: true,
-                          ),
-                        ],
-                      ),
-                      Expanded(child: Container()),
-                      IconButton(
-                          onPressed: () {},
-                          icon: SvgPicture.asset(
-                            'assets/icons/bar-2.svg',
-                          )),
-                      IconButton(
-                          onPressed: () {},
-                          icon: SvgPicture.asset('assets/icons/bell.svg')),
-                      IconButton(
-                          onPressed: () {},
-                          icon:
-                              SvgPicture.asset('assets/icons/settings-ui.svg')),
-                    ],
-                  ),
+                  // header home screen
+                  const HeaderHomeScreen(),
                   const SizedBox(height: 40),
 
-                  //
+                  // title
                   const RegularText(text: 'Music Tracks', fontSize: 20),
                   const SizedBox(height: 20),
 
-                  //
+                  // tracks
                   ...trackData.map((trackItem) {
-                    return Column(
-                      children: [
-                        Container(
-                          width: constraints.maxWidth,
-                          height: constraints.maxHeight * 0.13,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff1E1E1E).withOpacity(0.87),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 7),
-                              Container(
-                                width: constraints.maxHeight * 0.13 - 15,
-                                height: constraints.maxHeight * 0.13 - 15,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(image: NetworkImage(trackItem.coverURL),
-                                  fit: BoxFit.cover),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(7),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: constraints.maxWidth * 0.07),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RegularText(
-                                      text: trackItem.title, fontSize: 17),
-                                  const SizedBox(height: 5),
-                                  RegularText(
-                                    text: trackItem.author,
-                                    fontSize: 14,
-                                    isLightColor: true,
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                      ],
+                    return TrackBlock(
+                      width: constraints.maxWidth,
+                      height: constraints.maxHeight,
+                      track: trackItem,
                     );
                   }).toList(),
                 ],
