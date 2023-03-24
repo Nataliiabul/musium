@@ -94,9 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               Container(
                                 width: constraints.maxHeight * 0.13 - 15,
                                 height: constraints.maxHeight * 0.13 - 15,
-                                decoration: const BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.all(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(image: NetworkImage(trackItem.coverURL),
+                                  fit: BoxFit.cover),
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(7),
                                   ),
                                 ),
