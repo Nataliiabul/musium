@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:musium/style/color_text.dart';
 
-class HeaderExploreScreen extends StatelessWidget {
-  const HeaderExploreScreen({
-    super.key,
+class SimpleHeader extends StatelessWidget {
+  const SimpleHeader({
+    super.key, required this.text,
   });
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +23,8 @@ class HeaderExploreScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 20),
-        const ColorText(
-          text: 'Search',
+        ColorText(
+          text: text,
           fontSize: 27,
           isBold: true,
         ),

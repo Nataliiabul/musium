@@ -7,7 +7,7 @@ import 'package:musium/style/colors.dart';
 import 'package:musium/style/regular_text.dart';
 
 import 'package:musium/widgets/explore_screen/category_item_block.dart';
-import 'package:musium/widgets/explore_screen/header_explore_screen.dart';
+import 'package:musium/widgets/simple_header.dart.dart';
 
 
 class ExploreScreen extends StatefulWidget {
@@ -39,7 +39,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // header
-                  const HeaderExploreScreen(),
+                  const SimpleHeader(text: 'Search',),
                   const SizedBox(height: 30),
 
                   // search field

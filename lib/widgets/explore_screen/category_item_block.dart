@@ -16,7 +16,7 @@ class CategoryItemBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(7),
+      margin: const EdgeInsets.all(6),
       height: height,
       width: width,
       padding: const EdgeInsets.all(15),

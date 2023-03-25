@@ -17,6 +17,6 @@ class AppColors {
 
   static const Color mediumDarkBlue = Color(0xFF1DB1B7);
   static const Color mediumLightBlue = Color(0xFF44D7DD);
-  static const Color lightBlue = Color(0xFFA6F3FF);
+  static const Color lightBlue = Color(0xFFA6F3FF); // light gradient
   static const Color greyBlue = Color(0xFF446266);
 }
