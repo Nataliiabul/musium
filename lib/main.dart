@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musium/models/track.dart';
+import 'package:musium/screens/song_screen.dart';
 
 import 'package:musium/screens/explore_screen.dart';
 import 'package:musium/screens/home_screen.dart';
@@ -23,7 +24,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (ctx)=> Track(),)
+        ChangeNotifierProvider(
+          create: (ctx) => Track(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -40,6 +43,7 @@ class MyApp extends StatelessWidget {
           HomeScreen.routeName: (ctx) => const HomeScreen(),
           ExploreScreen.routeName: (ctx) => const ExploreScreen(),
           LibraryScreen.routeName: (ctx) => const LibraryScreen(),
+          SongScreen.routeName: (ctx) => const SongScreen(),
         },
       ),
     );
