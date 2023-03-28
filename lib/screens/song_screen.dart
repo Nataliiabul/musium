@@ -1,3 +1,5 @@
+import 'package:audioplayers/audioplayers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:musium/models/track.dart';
@@ -6,8 +8,10 @@ import 'package:musium/style/regular_text.dart';
 
 class SongScreen extends StatefulWidget {
   static const routeName = '/song';
-  const SongScreen({
+  TrackItem track;
+  SongScreen({
     super.key,
+    required this.track,
   });
 
   @override
@@ -19,9 +23,60 @@ class _SongScreenState extends State<SongScreen> {
     Navigator.of(context).pop();
   }
 
+  AudioPlayer audioPlayer = AudioPlayer();
+  bool isPlaying = false;
+  Duration duration = Duration.zero;
+  Duration position = Duration.zero;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    setAudio();
+
+    audioPlayer.onPlayerStateChanged.listen((state) {
+      setState(() {
+        isPlaying = state == PlayerState.playing;
+      });
+    });
+
+    audioPlayer.onDurationChanged.listen((newDuration) {
+      setState(() {
+        duration = newDuration;
+      });
+    });
+
+    audioPlayer.onPositionChanged.listen((newPosition) {
+      setState(() {
+        position = newPosition;
+      });
+    });
+  }
+
+  Future setAudio() async {
+    audioPlayer.setReleaseMode(ReleaseMode.loop);
+    String url = 'https://www.chosic.com/wp-content/uploads/2022/03/Luke-Bergs-Tropical-Soulmp3.mp3';
+    audioPlayer.setSourceUrl(url);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
+  String formatTime(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours);
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return [if (duration.inHours > 0) hours, minutes, seconds].join(':');
+  }
+
   @override
   Widget build(BuildContext context) {
-    final track = ModalRoute.of(context)!.settings.arguments as TrackItem;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: LayoutBuilder(
@@ -55,7 +110,7 @@ class _SongScreenState extends State<SongScreen> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                           image: NetworkImage(
-                            track.coverURL,
+                            widget.track.coverURL,
                           ),
                           fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(4),
@@ -90,12 +145,12 @@ class _SongScreenState extends State<SongScreen> {
 
                   // track title & author
                   RegularText(
-                    text: track.title,
+                    text: widget.track.title,
                     fontSize: 24,
                   ),
                   const SizedBox(height: 10),
                   RegularText(
-                    text: track.author,
+                    text: widget.track.author,
                     isLightColor: true,
                   ),
                   const SizedBox(height: 20),
@@ -109,8 +164,14 @@ class _SongScreenState extends State<SongScreen> {
                       overlayShape: RoundSliderOverlayShape(overlayRadius: 7.0),
                     ),
                     child: Slider(
-                      value: 0.75,
-                      onChanged: (value) {},
+                      min: 0,
+                      max: duration.inSeconds.toDouble(),
+                      value: position.inSeconds.toDouble(),
+                      onChanged: (value) async {
+                        final position = Duration(seconds: value.toInt());
+                        await audioPlayer.seek(position);
+                        await audioPlayer.resume();
+                      },
                       inactiveColor: AppColors.accentText,
                       activeColor: AppColors.activeSliderColor,
                     ),
@@ -121,16 +182,8 @@ class _SongScreenState extends State<SongScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      RegularText(
-                        text: '0:00',
-                        fontSize: 14,
-                        isLightColor: true,
-                      ),
-                      RegularText(
-                        text: '2:56',
-                        fontSize: 14,
-                        isLightColor: true,
-                      ),
+                      Text(formatTime(position)),
+                      Text(formatTime(duration - position)),
                     ],
                   ),
                   const SizedBox(height: 5),
@@ -170,9 +223,18 @@ class _SongScreenState extends State<SongScreen> {
                             end: Alignment.topCenter,
                           ),
                         ),
-                        child: SvgPicture.asset(
-                          'assets/icons/triangle.svg',
-                          color: AppColors.mainText,
+                        child: IconButton(
+                          icon: Icon(
+                            isPlaying ? Icons.pause : Icons.play_arrow,
+                          ),
+                          onPressed: () async {
+                            if (isPlaying) {
+                              await audioPlayer.pause();
+                            } else {
+                              
+                              await audioPlayer.resume();
+                            }
+                          },
                         ),
                       ),
                       const SizedBox(width: 20),

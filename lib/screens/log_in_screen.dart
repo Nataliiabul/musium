@@ -5,10 +5,10 @@ import 'package:musium/screens/tabs_screen.dart';
 
 import 'package:musium/style/colors.dart';
 import 'package:musium/style/regular_text.dart';
+
 import 'package:musium/widgets/log_in_screen/circle_continue_with_button.dart';
 import 'package:musium/widgets/log_in_screen/log_in_form.dart';
 import 'package:musium/widgets/log_in_screen/remember_box.dart';
-
 import 'package:musium/widgets/long_button.dart';
 import 'package:musium/widgets/sign_in_screen/divider_or.dart';
 import 'package:musium/widgets/sign_in_screen/sign_up_text_and_button.dart';
