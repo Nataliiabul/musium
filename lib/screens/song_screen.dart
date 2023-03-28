@@ -65,15 +65,27 @@ class _SongScreenState extends State<SongScreen> {
                   const SizedBox(height: 15),
 
                   // favorite button
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        iconSize: 35,
+                        icon: Icon(
+                          Icons.share_outlined,
+                          color: AppColors.mainText,
+                        ),
+                      ),
+                      const SizedBox(width: 0),
+                      IconButton(
                         onPressed: () {},
                         iconSize: 35,
                         icon: Icon(
                           Icons.favorite_outline,
                           color: AppColors.activeSliderColor,
-                        )),
+                        ),
+                      ),
+                    ],
                   ),
 
                   // track title & author
@@ -89,6 +101,7 @@ class _SongScreenState extends State<SongScreen> {
                   const SizedBox(height: 20),
 
                   // slider
+                  const SizedBox(height: 5),
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
                       thumbShape:
@@ -102,7 +115,7 @@ class _SongScreenState extends State<SongScreen> {
                       activeColor: AppColors.activeSliderColor,
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 7),
 
                   // minutes
                   Row(

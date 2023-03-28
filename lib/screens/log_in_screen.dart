@@ -93,8 +93,11 @@ class _LogInScreenState extends State<LogInScreen> {
                       text: 'Log in',
                       width: constraints.maxWidth,
                       function: () {
-                        Navigator.of(context)
-                            .pushReplacementNamed(TabsScreen.routeName);
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          TabsScreen.routeName,
+                          ModalRoute.withName('/'),
+                        );
                       }),
 
                   const SizedBox(height: 15),
@@ -122,9 +125,12 @@ class _LogInScreenState extends State<LogInScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      CircleContinueWithButton(imgPath: 'assets/images/google.png'),
-                      CircleContinueWithButton(imgPath: 'assets/images/facebook.png'),
-                      CircleContinueWithButton(imgPath: 'assets/images/apple.png'),
+                      CircleContinueWithButton(
+                          imgPath: 'assets/images/google.png'),
+                      CircleContinueWithButton(
+                          imgPath: 'assets/images/facebook.png'),
+                      CircleContinueWithButton(
+                          imgPath: 'assets/images/apple.png'),
                     ],
                   ),
 
