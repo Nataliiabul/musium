@@ -12,6 +12,8 @@ class AppColors {
   // static const Color imgBgColor = Color(0xFF4ac4d9);
   static const Color textFieldFillColor = Color(0xFFD9D9D9);
 
+  static const Color activeSliderColor = Color(0xFF7CEEFF);
+
   static const Color mainBlue = Color(0xFF00C2CB);
   static const Color secondBlue = Color(0xFF39C0D4);
 

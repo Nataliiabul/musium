@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           HomeScreen.routeName: (ctx) => const HomeScreen(),
           ExploreScreen.routeName: (ctx) => const ExploreScreen(),
           LibraryScreen.routeName: (ctx) => const LibraryScreen(),
-          SongScreen.routeName: (ctx) => const SongScreen(),
+          SongScreen.routeName: (ctx) => SongScreen(),
         },
       ),
     );
