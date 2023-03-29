@@ -56,8 +56,7 @@ class _SongScreenState extends State<SongScreen> {
 
   Future setAudio() async {
     audioPlayer.setReleaseMode(ReleaseMode.loop);
-    String url = 'https://www.chosic.com/wp-content/uploads/2022/03/Luke-Bergs-Tropical-Soulmp3.mp3';
-    audioPlayer.setSourceUrl(url);
+    audioPlayer.setSourceUrl(widget.track.trackURL);
   }
 
   @override
@@ -182,11 +181,11 @@ class _SongScreenState extends State<SongScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(formatTime(position)),
-                      Text(formatTime(duration - position)),
+                      RegularText(text: formatTime(position), fontSize: 12, isLightColor: true,),
+                      RegularText(text: formatTime(duration - position), fontSize: 12, isLightColor: true,),
                     ],
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 7),
 
                   // buttons
                   Row(
@@ -194,6 +193,7 @@ class _SongScreenState extends State<SongScreen> {
                     children: [
                       // previous track
                       IconButton(
+                        padding: const EdgeInsets.all(0),
                         onPressed: () {},
                         icon: SvgPicture.asset(
                           'assets/icons/back_track.svg',
@@ -208,8 +208,6 @@ class _SongScreenState extends State<SongScreen> {
                       Container(
                         width: 56,
                         height: 56,
-                        padding:
-                            const EdgeInsets.only(left: 5, top: 13, bottom: 13),
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(
                             Radius.circular(28),
@@ -226,6 +224,8 @@ class _SongScreenState extends State<SongScreen> {
                         child: IconButton(
                           icon: Icon(
                             isPlaying ? Icons.pause : Icons.play_arrow,
+                            color: AppColors.mainText,
+                            size: 40,
                           ),
                           onPressed: () async {
                             if (isPlaying) {
