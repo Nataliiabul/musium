@@ -81,19 +81,29 @@ class Track with ChangeNotifier {
     ),
   ];
 
-  final List _categories = [
-    'Happy',
-    'Funny',
-    'Calm',
-    'Sad',
-    'Nature'
-  ];
+  List categories (List tracks) {
+    List categories = [];
+    for (TrackItem track in tracks) {
+      if (!categories.contains(track.category)) {
+        categories.add(track.category);
+      }
+    }
+    return categories;
+  }
+
+  // final List _categories = [
+  //   'Happy',
+  //   'Funny',
+  //   'Calm',
+  //   'Sad',
+  //   'Nature'
+  // ];
 
   List get tracks {
     return _tracks;
   }
 
-  List get categories {
-    return _categories;
-  }
+  // List get categories {
+  //   return _categories;
+  // }
 }

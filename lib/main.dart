@@ -42,8 +42,7 @@ class MyApp extends StatelessWidget {
           TabsScreen.routeName: (ctx) => const TabsScreen(),
           HomeScreen.routeName: (ctx) => const HomeScreen(),
           ExploreScreen.routeName: (ctx) => const ExploreScreen(),
-          LibraryScreen.routeName: (ctx) => const LibraryScreen(),
-         
+          LibraryScreen.routeName: (ctx) => const LibraryScreen(), 
         },
       ),
     );

@@ -27,6 +27,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   @override
   Widget build(BuildContext context) {
     final trackData = Provider.of<Track>(context);
+    final categories = trackData.categories(trackData.tracks);
     return Scaffold(
       backgroundColor: AppColors.background,
       body: LayoutBuilder(
@@ -73,7 +74,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   Align(
                     alignment: Alignment.center,
                     child: Wrap(
-                      children: trackData.categories.map((categoryItem) {
+                      children: categories.map((categoryItem) {
                         return CategoryItemBlock(
                           height: constraints.maxHeight * 0.15,
                           width: constraints.maxWidth * 0.39,
