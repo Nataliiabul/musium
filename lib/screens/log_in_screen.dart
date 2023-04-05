@@ -81,7 +81,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   SizedBox(height: constraints.maxHeight * 0.04),
 
                   // fields
-                  LogInForm(),
+                  const LogInForm(),
                   const SizedBox(height: 30),
 
                   // remember box
@@ -124,7 +124,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   // continue with circle buttons
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
+                    children: const [
                       CircleContinueWithButton(
                           imgPath: 'assets/images/google.png'),
                       CircleContinueWithButton(

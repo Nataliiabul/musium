@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:musium/models/track.dart';
-import 'package:musium/screens/song_screen.dart';
 
 import 'package:musium/screens/explore_screen.dart';
 import 'package:musium/screens/home_screen.dart';

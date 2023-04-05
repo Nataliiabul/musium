@@ -39,6 +39,8 @@ class TrackBlock extends StatelessWidget {
             child: Row(
               children: [
                 const SizedBox(width: 7),
+
+                // track image
                 Container(
                   width: height * 0.13 - 15,
                   height: height * 0.13 - 15,
@@ -51,17 +53,21 @@ class TrackBlock extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: width * 0.07),
+
+                // text block
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // track title
                     RegularText(text: track.title, fontSize: 17),
                     const SizedBox(height: 5),
+                    // track author
                     RegularText(
                       text: track.author,
                       fontSize: 14,
                       isLightColor: true,
-                    )
+                    ),
                   ],
                 )
               ],

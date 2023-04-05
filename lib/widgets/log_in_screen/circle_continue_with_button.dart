@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:musium/style/colors.dart';
 
 class CircleContinueWithButton extends StatelessWidget {
-  CircleContinueWithButton({
+  const CircleContinueWithButton({
     super.key,
     required this.imgPath
   });
 
-  String imgPath;
+  final String imgPath;
 
 
   @override

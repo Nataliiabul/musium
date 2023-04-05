@@ -31,7 +31,6 @@ class _SongScreenState extends State<SongScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     setAudio();
@@ -62,7 +61,6 @@ class _SongScreenState extends State<SongScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     audioPlayer.dispose();
     super.dispose();
   }
@@ -126,7 +124,7 @@ class _SongScreenState extends State<SongScreen> {
                       IconButton(
                         onPressed: () {},
                         iconSize: 35,
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.share_outlined,
                           color: AppColors.mainText,
                         ),
@@ -135,7 +133,7 @@ class _SongScreenState extends State<SongScreen> {
                       IconButton(
                         onPressed: () {},
                         iconSize: 35,
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.favorite_outline,
                           color: AppColors.activeSliderColor,
                         ),
@@ -160,8 +158,8 @@ class _SongScreenState extends State<SongScreen> {
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
                       thumbShape:
-                          RoundSliderThumbShape(enabledThumbRadius: 7.0),
-                      overlayShape: RoundSliderOverlayShape(overlayRadius: 7.0),
+                          const RoundSliderThumbShape(enabledThumbRadius: 7.0),
+                      overlayShape: const RoundSliderOverlayShape(overlayRadius: 7.0),
                     ),
                     child: Slider(
                       min: 0,

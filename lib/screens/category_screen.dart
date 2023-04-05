@@ -44,7 +44,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           width: double.infinity,
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       SimpleHeader(text: widget.category),
                     ],
                   ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:musium/style/colors.dart';
-import 'package:musium/style/regular_text.dart';
 import 'package:musium/widgets/library_screen/library_function.dart';
 import 'package:musium/widgets/simple_header.dart.dart';
 
@@ -27,23 +25,23 @@ class _LibraryScreenState extends State<LibraryScreen> {
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: const [
                   // header
-                  const SimpleHeader(
+                  SimpleHeader(
                     text: 'Your Library',
                   ),
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15),
                   Divider(
                     color: AppColors.lightBlue,
                   ),
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15),
 
                   //
                   LibraryFunction(
                     iconPath: 'assets/icons/love.svg',
                     title: 'Your Liked Songs',
                   ),
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15),
 
                   //
                 ],
