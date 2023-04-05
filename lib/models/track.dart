@@ -91,19 +91,11 @@ class Track with ChangeNotifier {
     return categories;
   }
 
-  // final List _categories = [
-  //   'Happy',
-  //   'Funny',
-  //   'Calm',
-  //   'Sad',
-  //   'Nature'
-  // ];
-
   List get tracks {
     return _tracks;
   }
 
-  // List get categories {
-  //   return _categories;
-  // }
+  List categoriesTracks(String category) {
+    return _tracks.where((trackItem) => trackItem.category == category).toList();
+  }
 }

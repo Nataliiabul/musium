@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musium/screens/category_screen.dart';
 import 'package:musium/style/colors.dart';
 
 class CategoryItemBlock extends StatelessWidget {
@@ -15,24 +16,31 @@ class CategoryItemBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(6),
-      height: height,
-      width: width,
-      padding: const EdgeInsets.all(15),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(4),
+    return GestureDetector(
+      onTap: (){
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => CategoryScreen(category: categoryItemText)),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.all(6),
+        height: height,
+        width: width,
+        padding: const EdgeInsets.all(15),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(4),
+          ),
+          color: AppColors.mainBlue,
         ),
-        color: AppColors.mainBlue,
-      ),
-      child: Text(
-        categoryItemText,
-        style: const TextStyle(
-          fontSize: 16,
-          fontFamily: 'Century-Gothic',
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
+        child: Text(
+          categoryItemText,
+          style: const TextStyle(
+            fontSize: 16,
+            fontFamily: 'Century-Gothic',
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

@@ -14,20 +14,18 @@ class TrackBlock extends StatelessWidget {
   final double width;
   final double height;
   final TrackItem track;
-//ошибка в тебе, прими это
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         InkWell(
           onTap: () {
-           
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => SongScreen(track: track),
-                ),
-              );
-          
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => SongScreen(track: track),
+              ),
+            );
           },
           child: Container(
             width: width,
