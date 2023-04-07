@@ -21,8 +21,10 @@ class ExploreScreen extends StatefulWidget {
 class _ExploreScreenState extends State<ExploreScreen> {
   List _searchList = [];
   void _searchTrackArtist(String text) {
-    _searchList = Provider.of<Track>(context, listen: false).findTracksArtists(text);
-    print(_searchList);
+    setState(() {
+          _searchList = Provider.of<Track>(context, listen: false).findTracksArtists(text);
+
+    });
   }
 
   final hintStyle = const TextStyle(
@@ -71,7 +73,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 35),
+                  const SizedBox(height: 20),
 
                   // search tracks
                   ..._searchList.map(
@@ -82,7 +84,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           track: trackItem);
                     },
                   ).toList(),
-                  const SizedBox(height: 35),
+                  
 
                   // title
                   const RegularText(
