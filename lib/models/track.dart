@@ -81,7 +81,7 @@ class Track with ChangeNotifier {
     ),
   ];
 
-  List categories (List tracks) {
+  List categories(List tracks) {
     List categories = [];
     for (TrackItem track in tracks) {
       if (!categories.contains(track.category)) {
@@ -96,6 +96,16 @@ class Track with ChangeNotifier {
   }
 
   List categoriesTracks(String category) {
-    return _tracks.where((trackItem) => trackItem.category == category).toList();
+    return _tracks
+        .where((trackItem) => trackItem.category == category)
+        .toList();
+  }
+
+  List findTracksArtists(String text) {
+    return _tracks
+        .where((trackItem) =>
+            trackItem.title.toLowerCase().contains(text.toLowerCase()) ||
+            trackItem.author.toLowerCase().contains(text.toLowerCase()))
+        .toList();
   }
 }

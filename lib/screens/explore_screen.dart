@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musium/widgets/home_screen/track_block.dart';
 import 'package:provider/provider.dart';
 
 import 'package:musium/models/track.dart';
@@ -9,7 +10,6 @@ import 'package:musium/style/regular_text.dart';
 import 'package:musium/widgets/explore_screen/category_item_block.dart';
 import 'package:musium/widgets/simple_header.dart.dart';
 
-
 class ExploreScreen extends StatefulWidget {
   static const routeName = '/explore';
   const ExploreScreen({super.key});
@@ -19,6 +19,12 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
+  List _searchList = [];
+  void _searchTrackArtist(String text) {
+    _searchList = Provider.of<Track>(context, listen: false).findTracksArtists(text);
+    print(_searchList);
+  }
+
   final hintStyle = const TextStyle(
     fontSize: 13,
     fontFamily: 'Century-Gothic',
@@ -40,11 +46,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // header
-                  const SimpleHeader(text: 'Search',),
+                  const SimpleHeader(
+                    text: 'Search',
+                  ),
                   const SizedBox(height: 30),
 
                   // search field
                   TextField(
+                    onChanged: (text) => _searchTrackArtist(text),
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(
@@ -64,6 +73,17 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   ),
                   const SizedBox(height: 35),
 
+                  // search tracks
+                  ..._searchList.map(
+                    (trackItem) {
+                      return TrackBlock(
+                          width: constraints.maxWidth,
+                          height: constraints.maxHeight,
+                          track: trackItem);
+                    },
+                  ).toList(),
+                  const SizedBox(height: 35),
+
                   // title
                   const RegularText(
                     text: 'Categories',
@@ -71,6 +91,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   ),
                   const SizedBox(height: 17),
 
+                  // categories blocks
                   Align(
                     alignment: Alignment.center,
                     child: Wrap(
