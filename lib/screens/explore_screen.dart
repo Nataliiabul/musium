@@ -21,9 +21,10 @@ class ExploreScreen extends StatefulWidget {
 class _ExploreScreenState extends State<ExploreScreen> {
   List _searchList = [];
   void _searchTrackArtist(String text) {
+    if (text.isEmpty) return;
     setState(() {
-          _searchList = Provider.of<Track>(context, listen: false).findTracksArtists(text);
-
+      _searchList =
+          Provider.of<Track>(context, listen: false).findTracksArtists(text);
     });
   }
 
@@ -84,7 +85,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           track: trackItem);
                     },
                   ).toList(),
-                  
 
                   // title
                   const RegularText(
