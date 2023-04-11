@@ -85,8 +85,9 @@ class _LogInScreenState extends State<LogInScreen> {
                   ),
                   SizedBox(height: constraints.maxHeight * 0.04),
 
+                  // rewrite with data form widget !!!!!!!
                   // fields
-                  const LogInForm(isRegistration: false,),
+                  LogInForm(isRegistration: false,),
                   const SizedBox(height: 30),
 
                   // remember box

@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:musium/models/auth.dart';
 import 'package:musium/style/colors.dart';
+import 'package:musium/widgets/long_button.dart';
+import 'package:provider/provider.dart';
 
-class LogInForm extends StatefulWidget {
-  LogInForm({
-    required this.isRegistration,
-    super.key,
-  });
+class FormData extends StatefulWidget {
+  const FormData(
+      {super.key, required this.isRegistration, required this.width});
 
   final bool isRegistration;
+  final double width;
 
   @override
-  State<LogInForm> createState() => _LogInFormState();
+  State<FormData> createState() => _FormDataState();
 }
 
-class _LogInFormState extends State<LogInForm> {
+class _FormDataState extends State<FormData> {
   String _userName = '';
   String _userEmail = '';
   String _userPassword = '';
@@ -34,6 +35,11 @@ class _LogInFormState extends State<LogInForm> {
       return;
     }
     _formKey.currentState!.save();
+    sendData();
+  }
+
+  void sendData () {
+    Provider.of<Auth>(context, listen: false).registration(_userName, _userEmail, _userPassword);
   }
 
   @override
@@ -123,8 +129,15 @@ class _LogInFormState extends State<LogInForm> {
               _userPassword = value!;
             },
           ),
+          const SizedBox(height: 30),
 
-          
+          // log in
+          LongButton(
+            text: 'Create account',
+            width: widget.width,
+            function: checkForm,
+          ),
+          const SizedBox(height: 15),
         ],
       ),
     );

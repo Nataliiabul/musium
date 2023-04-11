@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musium/models/auth.dart';
 import 'package:musium/models/track.dart';
 
 import 'package:musium/screens/explore_screen.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (ctx) => Track(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Auth(),
         )
       ],
       child: MaterialApp(

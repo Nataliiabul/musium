@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
 import 'package:musium/models/track.dart';
+
 import 'package:musium/style/colors.dart';
 import 'package:musium/widgets/home_screen/track_block.dart';
 import 'package:musium/widgets/simple_header.dart.dart';
-import 'package:provider/provider.dart';
+
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key, required this.category});
