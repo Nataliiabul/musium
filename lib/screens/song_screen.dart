@@ -33,7 +33,9 @@ class _SongScreenState extends State<SongScreen> {
   void initState() {
     super.initState();
 
-    setAudio();
+    Future.delayed(Duration.zero).then((_) {
+      setAudio();
+    });
 
     audioPlayer.onPlayerStateChanged.listen((state) {
       setState(() {
@@ -159,7 +161,8 @@ class _SongScreenState extends State<SongScreen> {
                     data: SliderTheme.of(context).copyWith(
                       thumbShape:
                           const RoundSliderThumbShape(enabledThumbRadius: 7.0),
-                      overlayShape: const RoundSliderOverlayShape(overlayRadius: 7.0),
+                      overlayShape:
+                          const RoundSliderOverlayShape(overlayRadius: 7.0),
                     ),
                     child: Slider(
                       min: 0,
@@ -180,8 +183,16 @@ class _SongScreenState extends State<SongScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      RegularText(text: formatTime(position), fontSize: 12, isLightColor: true,),
-                      RegularText(text: formatTime(duration - position), fontSize: 12, isLightColor: true,),
+                      RegularText(
+                        text: formatTime(position),
+                        fontSize: 12,
+                        isLightColor: true,
+                      ),
+                      RegularText(
+                        text: formatTime(duration - position),
+                        fontSize: 12,
+                        isLightColor: true,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 7),
@@ -220,21 +231,27 @@ class _SongScreenState extends State<SongScreen> {
                             end: Alignment.topCenter,
                           ),
                         ),
-                        child: IconButton(
-                          icon: Icon(
-                            isPlaying ? Icons.pause : Icons.play_arrow,
-                            color: AppColors.mainText,
-                            size: 40,
-                          ),
-                          onPressed: () async {
-                            if (isPlaying) {
-                              await audioPlayer.pause();
-                            } else {
-                              
-                              await audioPlayer.resume();
-                            }
-                          },
-                        ),
+                        child: (duration.inMilliseconds == 0)
+                            ? const Padding(
+                                padding: EdgeInsets.all(12.0),
+                                child: CircularProgressIndicator(
+                                  color: AppColors.mainText,
+                                ),
+                              )
+                            : IconButton(
+                                icon: Icon(
+                                  isPlaying ? Icons.pause : Icons.play_arrow,
+                                  color: AppColors.mainText,
+                                  size: 40,
+                                ),
+                                onPressed: () async {
+                                  if (isPlaying) {
+                                    await audioPlayer.pause();
+                                  } else {
+                                    await audioPlayer.resume();
+                                  }
+                                },
+                              ),
                       ),
                       const SizedBox(width: 20),
 

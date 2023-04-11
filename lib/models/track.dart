@@ -81,6 +81,8 @@ class Track with ChangeNotifier {
     ),
   ];
 
+  bool setFirstData = false;
+
   List categories(List tracks) {
     List categories = [];
     for (TrackItem track in tracks) {
