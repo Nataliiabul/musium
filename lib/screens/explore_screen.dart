@@ -21,7 +21,7 @@ class ExploreScreen extends StatefulWidget {
 class _ExploreScreenState extends State<ExploreScreen> {
   List _searchList = [];
   void _searchTrackArtist(String text) {
-    if (text.isEmpty) {
+    if (text.isEmpty || text[0] == ' ') {
       _searchList = [];
       return;
     };

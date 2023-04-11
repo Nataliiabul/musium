@@ -4,9 +4,9 @@ import 'package:musium/style/colors.dart';
 import 'package:musium/style/regular_text.dart';
 
 class SignUpTextAndButton extends StatelessWidget {
-  const SignUpTextAndButton({
-    super.key,
-  });
+  SignUpTextAndButton({required this.registration});
+
+  Function registration;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,9 @@ class SignUpTextAndButton extends StatelessWidget {
           isMulish: true,
         ),
         OutlinedButton(
-          onPressed: () {},
+          onPressed: () {
+            registration();
+          },
           child: const Text(
             'Sign Up',
             style: TextStyle(

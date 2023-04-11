@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musium/screens/log_in_screen.dart';
+import 'package:musium/screens/registration_screen.dart';
 import 'package:musium/style/colors.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,6 +25,10 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void toLogIn() {
     Navigator.of(context).pushNamed(LogInScreen.routeName);
+  }
+
+  void toRegistration() {
+    Navigator.of(context).pushNamed(RegistrationScreen.routeName);
   }
 
   @override
@@ -103,11 +108,16 @@ class _SignInScreenState extends State<SignInScreen> {
                   const SizedBox(height: 40),
 
                   // log in with password button
-                  LongButton(text: 'Log in with a password',width: constraints.maxWidth, function: toLogIn),
+                  LongButton(
+                      text: 'Log in with a password',
+                      width: constraints.maxWidth,
+                      function: toLogIn),
                   const SizedBox(height: 20),
 
                   // sign up text & button
-                  const SignUpTextAndButton(),
+                  SignUpTextAndButton(
+                    registration: toRegistration,
+                  ),
                   const SizedBox(height: 20),
                 ],
               ),

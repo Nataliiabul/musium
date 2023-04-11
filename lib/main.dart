@@ -5,6 +5,7 @@ import 'package:musium/screens/explore_screen.dart';
 import 'package:musium/screens/home_screen.dart';
 import 'package:musium/screens/library_screen.dart';
 import 'package:musium/screens/log_in_screen.dart';
+import 'package:musium/screens/registration_screen.dart';
 import 'package:musium/screens/sign_in_screen.dart';
 import 'package:musium/screens/tabs_screen.dart';
 import 'package:musium/screens/welcome_screen.dart';
@@ -41,7 +42,8 @@ class MyApp extends StatelessWidget {
           TabsScreen.routeName: (ctx) => const TabsScreen(),
           HomeScreen.routeName: (ctx) => const HomeScreen(),
           ExploreScreen.routeName: (ctx) => const ExploreScreen(),
-          LibraryScreen.routeName: (ctx) => const LibraryScreen(), 
+          LibraryScreen.routeName: (ctx) => const LibraryScreen(),
+          RegistrationScreen.routeName: (ctx) => const RegistrationScreen(),
         },
       ),
     );

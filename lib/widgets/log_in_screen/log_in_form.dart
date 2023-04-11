@@ -5,8 +5,11 @@ import 'package:musium/style/colors.dart';
 
 class LogInForm extends StatelessWidget {
   const LogInForm({
+    required this.isRegistration,
     super.key,
   });
+
+  final bool isRegistration;
 
   final hintStyle = const TextStyle(
     fontFamily: 'Century-Gothic',
@@ -20,6 +23,31 @@ class LogInForm extends StatelessWidget {
     return Form(
       child: Column(
         children: [
+          if (isRegistration) TextFormField(
+            decoration: InputDecoration(
+                fillColor: AppColors.buttonFillColor,
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: AppColors.borderButtonColor,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                prefixIcon: Icon(Icons.person,
+                    color: Colors.white.withOpacity(0.3)),
+                hintText: 'Username',
+                hintStyle: hintStyle),
+            // validator: (value) {
+            //   if (value!.isEmpty || value.length < 2) {
+            //     return 'Некорректные данные!';
+            //   }
+            // },
+            // onSaved: (value) {
+            //   userEmail = value!;
+            // },
+          ),
+          if (isRegistration) const SizedBox(height: 20),
           TextFormField(
             decoration: InputDecoration(
                 fillColor: AppColors.buttonFillColor,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:musium/screens/registration_screen.dart';
 import 'package:musium/screens/tabs_screen.dart';
 
 import 'package:musium/style/colors.dart';
@@ -24,6 +25,10 @@ class LogInScreen extends StatefulWidget {
 class _LogInScreenState extends State<LogInScreen> {
   void toSignInScreen() {
     Navigator.of(context).pop();
+  }
+
+  void toRegistration() {
+    Navigator.of(context).pushNamed(RegistrationScreen.routeName);
   }
 
   bool isChecked = false;
@@ -81,7 +86,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   SizedBox(height: constraints.maxHeight * 0.04),
 
                   // fields
-                  const LogInForm(),
+                  const LogInForm(isRegistration: false,),
                   const SizedBox(height: 30),
 
                   // remember box
@@ -136,7 +141,9 @@ class _LogInScreenState extends State<LogInScreen> {
 
                   // sign up
                   const SizedBox(height: 15),
-                  const SignUpTextAndButton(),
+                  SignUpTextAndButton(
+                    registration: toRegistration,
+                  ),
                 ],
               ),
             ),
