@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:musium/models/auth.dart';
 import 'package:musium/models/track.dart';
 
@@ -14,7 +15,8 @@ import 'package:musium/screens/welcome_screen.dart';
 import 'package:musium/splash_screen.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -23,6 +25,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(dotenv.env['TEXT']);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
