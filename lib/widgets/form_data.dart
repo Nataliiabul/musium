@@ -5,13 +5,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:musium/models/auth.dart';
 import 'package:musium/style/color_text.dart';
 import 'package:musium/style/colors.dart';
-import 'package:musium/style/regular_text.dart';
 import 'package:musium/widgets/long_button.dart';
 import 'package:provider/provider.dart';
 
 class FormData extends StatefulWidget {
-  const FormData(
-      {super.key, required this.isRegistration, required this.width});
+  FormData({super.key, required this.isRegistration, required this.width});
 
   final bool isRegistration;
   final double width;
@@ -24,6 +22,8 @@ class _FormDataState extends State<FormData> {
   String _userName = '';
   String _userEmail = '';
   String _userPassword = '';
+
+  bool _isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -40,17 +40,26 @@ class _FormDataState extends State<FormData> {
     color: AppColors.mainText,
   );
 
-  void _checkForm() {
+  Future<void> _checkForm() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
     _formKey.currentState!.save();
     //
     try {
-      Provider.of<Auth>(context)
+      setState(() {
+        _isLoading = true;
+      });
+      await Provider.of<Auth>(context, listen: false)
           .registration(_userName, _userEmail, _userPassword);
-    } on HttpException catch (error) {
-      var errorMessage = 'Registration failed';
+    } on HttpException {
+      print('-----');
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (error) {
+      print(error);
+      var errorMessage = 'Could not authenticate you. Please try again later.';
       if (error.toString().contains('EMAIL_EXISTS')) {
         errorMessage = 'This email address is already in use.';
       } else if (error.toString().contains('INVALID_EMAIL')) {
@@ -62,9 +71,9 @@ class _FormDataState extends State<FormData> {
       } else if (error.toString().contains('INVALID_PASSWORD')) {
         errorMessage = 'Invalid password.';
       }
-      _errorDialog(errorMessage);
-    } catch (error) {
-      var errorMessage = 'Could not authenticate you. Please try again later.';
+      setState(() {
+        _isLoading = false;
+      });
       _errorDialog(errorMessage);
     }
   }
@@ -111,127 +120,162 @@ class _FormDataState extends State<FormData> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          if (widget.isRegistration)
-            TextFormField(
-              style: _mainStyle,
-              decoration: InputDecoration(
-                fillColor: AppColors.buttonFillColor,
-                filled: true,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: AppColors.borderButtonColor,
-                    width: 1.5,
+    return Stack(
+      children: [
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              if (widget.isRegistration)
+                TextFormField(
+                  style: _mainStyle,
+                  decoration: InputDecoration(
+                    fillColor: AppColors.buttonFillColor,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: AppColors.borderButtonColor,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: AppColors.mainBlue,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: AppColors.errorBorder,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    prefixIcon: Icon(Icons.person,
+                        color: Colors.white.withOpacity(0.3)),
+                    hintText: 'Username',
+                    hintStyle: _hintStyle,
                   ),
-                  borderRadius: BorderRadius.circular(10),
+                  validator: (value) {
+                    if (value!.isEmpty || value.length < 2) {
+                      return 'Incorrect data';
+                    }
+                  },
+                  onSaved: (value) {
+                    _userName = value!;
+                  },
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: AppColors.mainBlue,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                prefixIcon:
-                    Icon(Icons.person, color: Colors.white.withOpacity(0.3)),
-                hintText: 'Username',
-                hintStyle: _hintStyle,
+              if (widget.isRegistration) const SizedBox(height: 20),
+              TextFormField(
+                style: _mainStyle,
+                decoration: InputDecoration(
+                    fillColor: AppColors.buttonFillColor,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: AppColors.borderButtonColor,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: AppColors.mainBlue,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: AppColors.errorBorder,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    prefixIcon: SvgPicture.asset('assets/icons/mail.svg',
+                        width: 15,
+                        height: 15,
+                        fit: BoxFit.scaleDown,
+                        color: Colors.white.withOpacity(0.3)),
+                    hintText: 'Email',
+                    hintStyle: _hintStyle),
+                validator: (value) {
+                  if (value!.isEmpty || value.length < 2) {
+                    return 'Incorrect data';
+                  }
+                },
+                onSaved: (value) {
+                  _userEmail = value!;
+                },
               ),
-              validator: (value) {
-                if (value!.isEmpty || value.length < 2) {
-                  return 'Некорректные данные!';
-                }
-              },
-              onSaved: (value) {
-                _userName = value!;
-              },
-            ),
-          if (widget.isRegistration) const SizedBox(height: 20),
-          TextFormField(
-            style: _mainStyle,
-            decoration: InputDecoration(
-                fillColor: AppColors.buttonFillColor,
-                filled: true,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: AppColors.borderButtonColor,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: AppColors.mainBlue,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                prefixIcon: SvgPicture.asset('assets/icons/mail.svg',
-                    width: 15,
-                    height: 15,
-                    fit: BoxFit.scaleDown,
-                    color: Colors.white.withOpacity(0.3)),
-                hintText: 'Email',
-                hintStyle: _hintStyle),
-            validator: (value) {
-              if (value!.isEmpty || value.length < 2) {
-                return 'Некорректные данные!';
-              }
-            },
-            onSaved: (value) {
-              _userEmail = value!;
-            },
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            style: _mainStyle,
-            decoration: InputDecoration(
-                fillColor: AppColors.buttonFillColor,
-                filled: true,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: AppColors.borderButtonColor,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: AppColors.mainBlue,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                prefixIcon: SvgPicture.asset('assets/icons/lock.svg',
-                    width: 15,
-                    height: 15,
-                    fit: BoxFit.scaleDown,
-                    color: Colors.white.withOpacity(0.3)),
-                hintText: 'Password',
-                hintStyle: _hintStyle),
-            validator: (value) {
-              if (value!.isEmpty || value.length < 2) {
-                return 'Некорректные данные!';
-              }
-            },
-            onSaved: (value) {
-              _userPassword = value!;
-            },
-          ),
-          const SizedBox(height: 30),
+              const SizedBox(height: 20),
+              TextFormField(
+                style: _mainStyle,
+                decoration: InputDecoration(
+                    fillColor: AppColors.buttonFillColor,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: AppColors.borderButtonColor,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: AppColors.mainBlue,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: AppColors.errorBorder,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    prefixIcon: SvgPicture.asset('assets/icons/lock.svg',
+                        width: 15,
+                        height: 15,
+                        fit: BoxFit.scaleDown,
+                        color: Colors.white.withOpacity(0.3)),
+                    hintText: 'Password',
+                    hintStyle: _hintStyle),
+                validator: (value) {
+                  if (value!.isEmpty || value.length < 2) {
+                    return 'Incorrect data';
+                  }
+                },
+                onSaved: (value) {
+                  _userPassword = value!;
+                },
+              ),
+              const SizedBox(height: 30),
 
-          // log in
-          LongButton(
-            text: 'Create account',
-            width: widget.width,
-            function: _checkForm,
+              // log in
+              LongButton(
+                text: 'Create account',
+                width: widget.width,
+                function: _checkForm,
+              ),
+              const SizedBox(height: 15),
+            ],
           ),
-          const SizedBox(height: 15),
-        ],
-      ),
+        ),
+        if (_isLoading) const Center(
+          heightFactor: 3.5,
+          child: SizedBox(
+            width: 55,
+            height: 55,
+            child: CircularProgressIndicator(
+              color: AppColors.lightBlue,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

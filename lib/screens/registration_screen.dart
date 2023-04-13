@@ -73,7 +73,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   SizedBox(height: constraints.maxHeight * 0.04),
 
                   // form data
-                  FormData(isRegistration: true, width: constraints.maxWidth),
+                  FormData(isRegistration: true, width: constraints.maxWidth,),
                 ],
               ),
             ),

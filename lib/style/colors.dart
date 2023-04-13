@@ -11,6 +11,7 @@ class AppColors {
 
   // static const Color imgBgColor = Color(0xFF4ac4d9);
   static const Color textFieldFillColor = Color(0xFFD9D9D9);
+  static const Color errorBorder = Color(0xFFFF3D3D);
 
   static const Color activeSliderColor = Color(0xFF7CEEFF);
 
