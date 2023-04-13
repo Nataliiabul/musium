@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class Auth with ChangeNotifier {
@@ -12,7 +13,8 @@ class Auth with ChangeNotifier {
   Future<void> registration(
       String username, String email, String password) async {
     final url = Uri.parse(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA_1cGwjDilsQwjYX50PUEhvlk8ndH2Jkc');
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${dotenv.env['WEBAPIKEY']}');
+        print('${dotenv.env['WEBAPIKEY']}');
     try {
       final response = await http.post(
         url,

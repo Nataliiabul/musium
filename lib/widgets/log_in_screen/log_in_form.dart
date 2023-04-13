@@ -52,6 +52,14 @@ class _LogInFormState extends State<LogInForm> {
                       color: AppColors.borderButtonColor,
                       width: 1,
                     ),
+                    
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: AppColors.mainBlue,
+                      width: 1.5,
+                    ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   prefixIcon:
@@ -79,6 +87,13 @@ class _LogInFormState extends State<LogInForm> {
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: AppColors.mainBlue,
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 prefixIcon: SvgPicture.asset('assets/icons/mail.svg',
                     width: 15,
                     height: 15,
@@ -107,6 +122,13 @@ class _LogInFormState extends State<LogInForm> {
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: AppColors.mainBlue,
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 prefixIcon: SvgPicture.asset('assets/icons/lock.svg',
                     width: 15,
                     height: 15,

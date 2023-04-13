@@ -23,10 +23,16 @@ class _FormDataState extends State<FormData> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final hintStyle = const TextStyle(
+  final hintStyle = TextStyle(
     fontFamily: 'Century-Gothic',
     fontSize: 16,
     fontWeight: FontWeight.bold,
+    color: Colors.white.withOpacity(0.3),
+  );
+
+  final mainStyle = const TextStyle(
+    fontFamily: 'Century-Gothic',
+    fontSize: 16,
     color: AppColors.mainText,
   );
 
@@ -50,20 +56,29 @@ class _FormDataState extends State<FormData> {
         children: [
           if (widget.isRegistration)
             TextFormField(
+              style: mainStyle,
               decoration: InputDecoration(
                   fillColor: AppColors.buttonFillColor,
                   filled: true,
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: AppColors.borderButtonColor,
-                      width: 1,
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: AppColors.mainBlue,
+                      width: 1.5,
                     ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   prefixIcon:
                       Icon(Icons.person, color: Colors.white.withOpacity(0.3)),
                   hintText: 'Username',
-                  hintStyle: hintStyle),
+                  hintStyle: hintStyle,
+                  ),
               validator: (value) {
                 if (value!.isEmpty || value.length < 2) {
                   return 'Некорректные данные!';
@@ -75,16 +90,24 @@ class _FormDataState extends State<FormData> {
             ),
           if (widget.isRegistration) const SizedBox(height: 20),
           TextFormField(
+            style: mainStyle,
             decoration: InputDecoration(
                 fillColor: AppColors.buttonFillColor,
                 filled: true,
                 enabledBorder: OutlineInputBorder(
                   borderSide: const BorderSide(
                     color: AppColors.borderButtonColor,
-                    width: 1,
+                    width: 1.5,
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: AppColors.mainBlue,
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 prefixIcon: SvgPicture.asset('assets/icons/mail.svg',
                     width: 15,
                     height: 15,
@@ -103,16 +126,24 @@ class _FormDataState extends State<FormData> {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            style: mainStyle,
             decoration: InputDecoration(
                 fillColor: AppColors.buttonFillColor,
                 filled: true,
                 enabledBorder: OutlineInputBorder(
                   borderSide: const BorderSide(
                     color: AppColors.borderButtonColor,
-                    width: 1,
+                    width: 1.5,
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: AppColors.mainBlue,
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 prefixIcon: SvgPicture.asset('assets/icons/lock.svg',
                     width: 15,
                     height: 15,
