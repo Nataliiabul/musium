@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:musium/models/auth.dart';
+import 'package:musium/style/color_text.dart';
 import 'package:musium/style/colors.dart';
+import 'package:musium/style/regular_text.dart';
 import 'package:musium/widgets/long_button.dart';
 import 'package:provider/provider.dart';
 
@@ -23,29 +27,86 @@ class _FormDataState extends State<FormData> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final hintStyle = TextStyle(
+  final _hintStyle = TextStyle(
     fontFamily: 'Century-Gothic',
     fontSize: 16,
     fontWeight: FontWeight.bold,
     color: Colors.white.withOpacity(0.3),
   );
 
-  final mainStyle = const TextStyle(
+  final _mainStyle = const TextStyle(
     fontFamily: 'Century-Gothic',
     fontSize: 16,
     color: AppColors.mainText,
   );
 
-  void checkForm() {
+  void _checkForm() {
     if (!_formKey.currentState!.validate()) {
       return;
     }
     _formKey.currentState!.save();
-    sendData();
+    //
+    try {
+      Provider.of<Auth>(context)
+          .registration(_userName, _userEmail, _userPassword);
+    } on HttpException catch (error) {
+      var errorMessage = 'Registration failed';
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'This email address is already in use.';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'This is not a valid email address';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'This password is too weak.';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'Could not find a user with that email.';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Invalid password.';
+      }
+      _errorDialog(errorMessage);
+    } catch (error) {
+      var errorMessage = 'Could not authenticate you. Please try again later.';
+      _errorDialog(errorMessage);
+    }
   }
 
-  void sendData () {
-    Provider.of<Auth>(context, listen: false).registration(_userName, _userEmail, _userPassword);
+  Future<void> _errorDialog(String message) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Error',
+            style: TextStyle(
+              fontFamily: 'Century-Gothic',
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: AppColors.background,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: Text(
+              message,
+              style: const TextStyle(
+                fontFamily: 'Century-Gothic',
+                fontSize: 16,
+                color: AppColors.background,
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const ColorText(
+                text: 'Ok',
+                isBold: true,
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -56,29 +117,29 @@ class _FormDataState extends State<FormData> {
         children: [
           if (widget.isRegistration)
             TextFormField(
-              style: mainStyle,
+              style: _mainStyle,
               decoration: InputDecoration(
-                  fillColor: AppColors.buttonFillColor,
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: AppColors.borderButtonColor,
-                      width: 1.5,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
+                fillColor: AppColors.buttonFillColor,
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: AppColors.borderButtonColor,
+                    width: 1.5,
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: AppColors.mainBlue,
-                      width: 1.5,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: AppColors.mainBlue,
+                    width: 1.5,
                   ),
-                  prefixIcon:
-                      Icon(Icons.person, color: Colors.white.withOpacity(0.3)),
-                  hintText: 'Username',
-                  hintStyle: hintStyle,
-                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                prefixIcon:
+                    Icon(Icons.person, color: Colors.white.withOpacity(0.3)),
+                hintText: 'Username',
+                hintStyle: _hintStyle,
+              ),
               validator: (value) {
                 if (value!.isEmpty || value.length < 2) {
                   return 'Некорректные данные!';
@@ -90,7 +151,7 @@ class _FormDataState extends State<FormData> {
             ),
           if (widget.isRegistration) const SizedBox(height: 20),
           TextFormField(
-            style: mainStyle,
+            style: _mainStyle,
             decoration: InputDecoration(
                 fillColor: AppColors.buttonFillColor,
                 filled: true,
@@ -102,19 +163,19 @@ class _FormDataState extends State<FormData> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: AppColors.mainBlue,
-                      width: 1.5,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    color: AppColors.mainBlue,
+                    width: 1.5,
                   ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 prefixIcon: SvgPicture.asset('assets/icons/mail.svg',
                     width: 15,
                     height: 15,
                     fit: BoxFit.scaleDown,
                     color: Colors.white.withOpacity(0.3)),
                 hintText: 'Email',
-                hintStyle: hintStyle),
+                hintStyle: _hintStyle),
             validator: (value) {
               if (value!.isEmpty || value.length < 2) {
                 return 'Некорректные данные!';
@@ -126,7 +187,7 @@ class _FormDataState extends State<FormData> {
           ),
           const SizedBox(height: 20),
           TextFormField(
-            style: mainStyle,
+            style: _mainStyle,
             decoration: InputDecoration(
                 fillColor: AppColors.buttonFillColor,
                 filled: true,
@@ -138,19 +199,19 @@ class _FormDataState extends State<FormData> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: AppColors.mainBlue,
-                      width: 1.5,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    color: AppColors.mainBlue,
+                    width: 1.5,
                   ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 prefixIcon: SvgPicture.asset('assets/icons/lock.svg',
                     width: 15,
                     height: 15,
                     fit: BoxFit.scaleDown,
                     color: Colors.white.withOpacity(0.3)),
                 hintText: 'Password',
-                hintStyle: hintStyle),
+                hintStyle: _hintStyle),
             validator: (value) {
               if (value!.isEmpty || value.length < 2) {
                 return 'Некорректные данные!';
@@ -166,7 +227,7 @@ class _FormDataState extends State<FormData> {
           LongButton(
             text: 'Create account',
             width: widget.width,
-            function: checkForm,
+            function: _checkForm,
           ),
           const SizedBox(height: 15),
         ],

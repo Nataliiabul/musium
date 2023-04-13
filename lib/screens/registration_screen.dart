@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:musium/style/colors.dart';
+import 'package:musium/style/color_text.dart';
 
+import 'package:musium/style/colors.dart';
 import 'package:musium/style/regular_text.dart';
+
 import 'package:musium/widgets/form_data.dart';
-import 'package:musium/widgets/log_in_screen/log_in_form.dart';
-import 'package:musium/widgets/long_button.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const routeName = '/registration';
