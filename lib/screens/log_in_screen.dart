@@ -6,6 +6,7 @@ import 'package:musium/screens/tabs_screen.dart';
 
 import 'package:musium/style/colors.dart';
 import 'package:musium/style/regular_text.dart';
+import 'package:musium/widgets/form_data.dart';
 
 import 'package:musium/widgets/log_in_screen/circle_continue_with_button.dart';
 import 'package:musium/widgets/log_in_screen/log_in_form.dart';
@@ -85,28 +86,28 @@ class _LogInScreenState extends State<LogInScreen> {
                   ),
                   SizedBox(height: constraints.maxHeight * 0.04),
 
-                  // rewrite with data form widget !!!!!!!
+                  
                   // fields
-                  LogInForm(isRegistration: false,),
-                  const SizedBox(height: 30),
-
-                  // remember box
-                  RememberBox(isChecked: isChecked),
-                  const SizedBox(height: 30),
-
-                  // log in
-                  LongButton(
-                      text: 'Log in',
-                      width: constraints.maxWidth,
-                      function: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          TabsScreen.routeName,
-                          ModalRoute.withName('/'),
-                        );
-                      }),
-
+                  FormData(isRegistration: false, width: constraints.maxWidth),
                   const SizedBox(height: 15),
+
+                  // // remember box
+                  // RememberBox(isChecked: isChecked),
+                  // const SizedBox(height: 30),
+
+                  // // log in
+                  // LongButton(
+                  //     text: 'Log in',
+                  //     width: constraints.maxWidth,
+                  //     function: () {
+                  //       Navigator.pushNamedAndRemoveUntil(
+                  //         context,
+                  //         TabsScreen.routeName,
+                  //         ModalRoute.withName('/'),
+                  //       );
+                  //     }),
+
+                  // const SizedBox(height: 15),
 
                   // forgot password
                   OutlinedButton(

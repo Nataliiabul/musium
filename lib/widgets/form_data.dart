@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:musium/models/auth.dart';
+import 'package:musium/screens/tabs_screen.dart';
 import 'package:musium/style/color_text.dart';
 import 'package:musium/style/colors.dart';
 import 'package:musium/widgets/long_button.dart';
@@ -50,9 +51,25 @@ class _FormDataState extends State<FormData> {
       setState(() {
         _isLoading = true;
       });
-      await Provider.of<Auth>(context, listen: false)
-          .registration(_userName, _userEmail, _userPassword);
-    }catch (error) {
+      // registration
+      if (widget.isRegistration) {
+        await Provider.of<Auth>(context, listen: false)
+            .registration(_userName, _userEmail, _userPassword);
+      } else {
+        // auth
+        await Provider.of<Auth>(context, listen: false)
+            .auth(_userEmail, _userPassword);
+      }
+      // success
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        TabsScreen.routeName,
+        ModalRoute.withName('/'),
+      );
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (error) {
       var errorMessage = 'Could not authenticate you. Please try again later.';
       if (error.toString().contains('EMAIL_EXISTS')) {
         errorMessage = 'This email address is already in use.';
@@ -238,6 +255,7 @@ class _FormDataState extends State<FormData> {
                         color: Colors.white.withOpacity(0.3)),
                     hintText: 'Password',
                     hintStyle: _hintStyle),
+                    obscureText: true,
                 validator: (value) {
                   if (value!.isEmpty || value.length < 2) {
                     return 'Incorrect data';
@@ -251,7 +269,7 @@ class _FormDataState extends State<FormData> {
 
               // log in
               LongButton(
-                text: 'Create account',
+                text: widget.isRegistration ? 'Create account' : 'Log in',
                 width: widget.width,
                 function: _checkForm,
               ),
@@ -259,16 +277,18 @@ class _FormDataState extends State<FormData> {
             ],
           ),
         ),
-        if (_isLoading) const Center(
-          heightFactor: 3.5,
-          child: SizedBox(
-            width: 55,
-            height: 55,
-            child: CircularProgressIndicator(
-              color: AppColors.lightBlue,
+        if (_isLoading)
+          const Center(
+            heightFactor: 3.5,
+            child: SizedBox(
+              width: 55,
+              height: 55,
+              child: CircularProgressIndicator(
+                strokeWidth: 4,
+                color: AppColors.lightBlue,
+              ),
             ),
           ),
-        ),
       ],
     );
   }
