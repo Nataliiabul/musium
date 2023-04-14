@@ -52,13 +52,7 @@ class _FormDataState extends State<FormData> {
       });
       await Provider.of<Auth>(context, listen: false)
           .registration(_userName, _userEmail, _userPassword);
-    } on HttpException {
-      print('-----');
-      setState(() {
-        _isLoading = false;
-      });
-    } catch (error) {
-      print(error);
+    }catch (error) {
       var errorMessage = 'Could not authenticate you. Please try again later.';
       if (error.toString().contains('EMAIL_EXISTS')) {
         errorMessage = 'This email address is already in use.';
