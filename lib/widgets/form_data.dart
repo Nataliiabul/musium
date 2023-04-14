@@ -1,16 +1,19 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:musium/models/auth.dart';
-import 'package:musium/screens/tabs_screen.dart';
-import 'package:musium/style/color_text.dart';
-import 'package:musium/style/colors.dart';
-import 'package:musium/widgets/long_button.dart';
 import 'package:provider/provider.dart';
 
+import 'package:musium/models/auth.dart';
+
+import 'package:musium/screens/tabs_screen.dart';
+
+import 'package:musium/style/color_text.dart';
+import 'package:musium/style/colors.dart';
+
+import 'package:musium/widgets/long_button.dart';
+
 class FormData extends StatefulWidget {
-  FormData({super.key, required this.isRegistration, required this.width});
+  const FormData(
+      {super.key, required this.isRegistration, required this.width});
 
   final bool isRegistration;
   final double width;
@@ -41,12 +44,37 @@ class _FormDataState extends State<FormData> {
     color: AppColors.mainText,
   );
 
+  // forms border styles
+  final _enabledBorder = OutlineInputBorder(
+    borderSide: const BorderSide(
+      color: AppColors.borderButtonColor,
+      width: 1.5,
+    ),
+    borderRadius: BorderRadius.circular(10),
+  );
+
+  final _focusedBorder = OutlineInputBorder(
+    borderSide: const BorderSide(
+      color: AppColors.mainBlue,
+      width: 1.5,
+    ),
+    borderRadius: BorderRadius.circular(10),
+  );
+
+  final _errorBorder = OutlineInputBorder(
+    borderSide: const BorderSide(
+      color: AppColors.errorBorder,
+      width: 1.5,
+    ),
+    borderRadius: BorderRadius.circular(10),
+  );
+
+  // check form & continue actions
   Future<void> _checkForm() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
     _formKey.currentState!.save();
-    //
     try {
       setState(() {
         _isLoading = true;
@@ -60,15 +88,16 @@ class _FormDataState extends State<FormData> {
         await Provider.of<Auth>(context, listen: false)
             .auth(_userEmail, _userPassword);
       }
+      
       // success
+      setState(() {
+        _isLoading = false;
+      });
       Navigator.pushNamedAndRemoveUntil(
         context,
         TabsScreen.routeName,
         ModalRoute.withName('/'),
       );
-      setState(() {
-        _isLoading = false;
-      });
     } catch (error) {
       var errorMessage = 'Could not authenticate you. Please try again later.';
       if (error.toString().contains('EMAIL_EXISTS')) {
@@ -89,6 +118,7 @@ class _FormDataState extends State<FormData> {
     }
   }
 
+  // error dialog
   Future<void> _errorDialog(String message) async {
     return showDialog(
       context: context,
@@ -143,27 +173,9 @@ class _FormDataState extends State<FormData> {
                   decoration: InputDecoration(
                     fillColor: AppColors.buttonFillColor,
                     filled: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.borderButtonColor,
-                        width: 1.5,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.mainBlue,
-                        width: 1.5,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.errorBorder,
-                        width: 1.5,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                    enabledBorder: _enabledBorder,
+                    focusedBorder: _focusedBorder,
+                    errorBorder: _errorBorder,
                     prefixIcon: Icon(Icons.person,
                         color: Colors.white.withOpacity(0.3)),
                     hintText: 'Username',
@@ -184,27 +196,9 @@ class _FormDataState extends State<FormData> {
                 decoration: InputDecoration(
                     fillColor: AppColors.buttonFillColor,
                     filled: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.borderButtonColor,
-                        width: 1.5,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.mainBlue,
-                        width: 1.5,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.errorBorder,
-                        width: 1.5,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                    enabledBorder: _enabledBorder,
+                    focusedBorder: _focusedBorder,
+                    errorBorder: _errorBorder,
                     prefixIcon: SvgPicture.asset('assets/icons/mail.svg',
                         width: 15,
                         height: 15,
@@ -227,27 +221,9 @@ class _FormDataState extends State<FormData> {
                 decoration: InputDecoration(
                     fillColor: AppColors.buttonFillColor,
                     filled: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.borderButtonColor,
-                        width: 1.5,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.mainBlue,
-                        width: 1.5,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.errorBorder,
-                        width: 1.5,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                    enabledBorder: _enabledBorder,
+                    focusedBorder: _focusedBorder,
+                    errorBorder: _errorBorder,
                     prefixIcon: SvgPicture.asset('assets/icons/lock.svg',
                         width: 15,
                         height: 15,
@@ -255,7 +231,7 @@ class _FormDataState extends State<FormData> {
                         color: Colors.white.withOpacity(0.3)),
                     hintText: 'Password',
                     hintStyle: _hintStyle),
-                    obscureText: true,
+                obscureText: true,
                 validator: (value) {
                   if (value!.isEmpty || value.length < 2) {
                     return 'Incorrect data';
@@ -277,10 +253,12 @@ class _FormDataState extends State<FormData> {
             ],
           ),
         ),
+
+        // circular progress indicator
         if (_isLoading)
-          const Center(
-            heightFactor: 3.5,
-            child: SizedBox(
+          Center(
+            heightFactor: widget.isRegistration ? 3.5 : 2.5,
+            child: const SizedBox(
               width: 55,
               height: 55,
               child: CircularProgressIndicator(

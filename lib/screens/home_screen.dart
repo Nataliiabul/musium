@@ -18,6 +18,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    setState(() {
+      _isLoading = true;
+    });
+    await Future.delayed(Duration.zero).then(
+        (_) => Provider.of<Track>(context, listen: false).fetchAndSetTracks());
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +67,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       track: trackItem,
                     );
                   }).toList(),
+
+                  // circular progress indicator
+                  if (_isLoading)
+                    const Center(
+                      child: SizedBox(
+                        width: 55,
+                        height: 55,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 4,
+                          color: AppColors.lightBlue,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
