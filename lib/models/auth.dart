@@ -8,18 +8,22 @@ class Auth with ChangeNotifier {
   String? _token;
   DateTime? _expiryDate;
   String? _userId;
-  String? username;
+  String? _username;
 
   bool get isAuth {
     return _token != null && _token != "null";
   }
 
+  String get userName {
+    return _username ?? 'unknown';
+  }
+
   Future<void> registration(
       String username, String email, String password) async {
-    final url = Uri.parse(
+    var url = Uri.parse(
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${dotenv.env['WEBAPIKEY']}');
     try {
-      final response = await http.post(
+      var response = await http.post(
         url,
         body: json.encode(
           {
@@ -42,6 +46,15 @@ class Auth with ChangeNotifier {
           ),
         ),
       );
+      url = Uri.parse('${dotenv.env['REALTIMEDATABASE']}users/$_userId/information.json');
+      response = await http.post(
+        url, 
+        body: json.encode({
+          'email': email,
+          'username': username,
+        },),
+      );
+      _username = username;
       notifyListeners();
     } catch (error) {
       throw error;
@@ -49,9 +62,9 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> auth (String email, String password) async {
-    final url = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${dotenv.env['WEBAPIKEY']}');
+    var url = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${dotenv.env['WEBAPIKEY']}');
     try {
-      final response = await http.post(
+      var response = await http.post(
         url,
         body: json.encode({
           'email': email,
@@ -59,7 +72,7 @@ class Auth with ChangeNotifier {
           'returnSecureToken': true,
         },),
       );
-      final responseData = json.decode(response.body);
+      var responseData = json.decode(response.body);
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);
       }
@@ -72,6 +85,12 @@ class Auth with ChangeNotifier {
           ),
         ),
       );
+      url = Uri.parse('${dotenv.env['REALTIMEDATABASE']}users/$_userId/information.json');
+      response = await http.get(url);
+      responseData = json.decode(response.body);
+      responseData.forEach((bdNum, userInformation){
+        _username = userInformation['username'];
+      });
       notifyListeners();
     } catch (error) {
       throw error;

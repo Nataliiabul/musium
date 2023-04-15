@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musium/models/auth.dart';
 
 import 'package:musium/models/track.dart';
 import 'package:musium/style/colors.dart';
@@ -30,8 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _isLoading = true;
     });
-    await Future.delayed(Duration.zero).then(
-        (_) => Provider.of<Track>(context, listen: false).fetchAndSetTracks());
+    await Provider.of<Track>(context, listen: false).fetchAndSetTracks();
     setState(() {
       _isLoading = false;
     });
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // header home screen
-                  const HeaderHomeScreen(),
+                  HeaderHomeScreen(username: Provider.of<Auth>(context).userName),
                   const SizedBox(height: 40),
 
                   // title

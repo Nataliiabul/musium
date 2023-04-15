@@ -4,9 +4,12 @@ import 'package:musium/style/colors.dart';
 import 'package:musium/style/regular_text.dart';
 
 class HeaderHomeScreen extends StatelessWidget {
-  const HeaderHomeScreen({
+  HeaderHomeScreen({
     super.key,
+    required this.username,
   });
+
+  String username;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +23,13 @@ class HeaderHomeScreen extends StatelessWidget {
         const SizedBox(width: 15),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            RegularText(
+          children: [
+            const RegularText(
               text: 'Welcome back!',
               fontSize: 15,
             ),
             RegularText(
-              text: 'username',
+              text: username,
               fontSize: 13,
               isLightColor: true,
             ),
