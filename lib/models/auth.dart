@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:musium/helpers/http_exception.dart';
+import 'package:musium/screens/sign_in_screen.dart';
+import 'package:musium/screens/tabs_screen.dart';
 
 class Auth with ChangeNotifier {
   String? _token;
@@ -46,13 +48,16 @@ class Auth with ChangeNotifier {
           ),
         ),
       );
-      url = Uri.parse('${dotenv.env['REALTIMEDATABASE']}users/$_userId/information.json');
+      url = Uri.parse(
+          '${dotenv.env['REALTIMEDATABASE']}users/$_userId/information.json');
       response = await http.post(
-        url, 
-        body: json.encode({
-          'email': email,
-          'username': username,
-        },),
+        url,
+        body: json.encode(
+          {
+            'email': email,
+            'username': username,
+          },
+        ),
       );
       _username = username;
       notifyListeners();
@@ -61,16 +66,19 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> auth (String email, String password) async {
-    var url = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${dotenv.env['WEBAPIKEY']}');
+  Future<void> auth(String email, String password) async {
+    var url = Uri.parse(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${dotenv.env['WEBAPIKEY']}');
     try {
       var response = await http.post(
         url,
-        body: json.encode({
-          'email': email,
-          'password': password,
-          'returnSecureToken': true,
-        },),
+        body: json.encode(
+          {
+            'email': email,
+            'password': password,
+            'returnSecureToken': true,
+          },
+        ),
       );
       var responseData = json.decode(response.body);
       if (responseData['error'] != null) {
@@ -85,15 +93,29 @@ class Auth with ChangeNotifier {
           ),
         ),
       );
-      url = Uri.parse('${dotenv.env['REALTIMEDATABASE']}users/$_userId/information.json');
+      url = Uri.parse(
+          '${dotenv.env['REALTIMEDATABASE']}users/$_userId/information.json');
       response = await http.get(url);
       responseData = json.decode(response.body);
-      responseData.forEach((bdNum, userInformation){
+      responseData.forEach((bdNum, userInformation) {
         _username = userInformation['username'];
       });
       notifyListeners();
     } catch (error) {
       throw error;
     }
+  }
+
+  void logOut(BuildContext context) {
+    _token = null;
+    _expiryDate = null;
+    _userId = null;
+    _username = null;
+
+    Navigator.pushNamedAndRemoveUntil(
+        context,
+        SignInScreen.routeName,
+        ModalRoute.withName('/'),
+      );
   }
 }
