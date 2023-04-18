@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:musium/models/auth.dart';
+import 'package:musium/screens/sign_in_screen.dart';
 import 'package:musium/style/colors.dart';
 import 'package:musium/style/regular_text.dart';
 import 'package:provider/provider.dart';
@@ -57,16 +58,19 @@ class HeaderHomeScreen extends StatelessWidget {
                     fontFamily: 'Century-Gothic',
                     color: AppColors.background,
                   ),
-                  
                 ),
               ),
             ];
-            
           },
           onSelected: (value) {
             if (value == 'logOut') {
-              Provider.of<Auth>(context, listen: false).logOut(context);
-            } 
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                SignInScreen.routeName,
+                ModalRoute.withName('/'),
+              );
+              Provider.of<Auth>(context, listen: false).logOut();
+            }
           },
           icon: SvgPicture.asset('assets/icons/settings-ui.svg'),
           offset: Offset(-25, 25),

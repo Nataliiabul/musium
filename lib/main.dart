@@ -35,23 +35,33 @@ class MyApp extends StatelessWidget {
           create: (ctx) => Auth(),
         )
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.grey,
+      child: Consumer<Auth>(
+        builder: (ctx, auth, _) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.grey,
+          ),
+          home: auth.isAuth
+              ? const TabsScreen()
+              : FutureBuilder(
+                future: auth.tryAutoLogin(),
+                  builder: (ctx, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashScreen()
+                          : SignInScreen(),),
+          routes: {
+            WelcomeScreen.routeName: (ctx) => const WelcomeScreen(),
+            SignInScreen.routeName: (ctx) => const SignInScreen(),
+            LogInScreen.routeName: (ctx) => const LogInScreen(),
+            TabsScreen.routeName: (ctx) => const TabsScreen(),
+            HomeScreen.routeName: (ctx) => const HomeScreen(),
+            ExploreScreen.routeName: (ctx) => const ExploreScreen(),
+            LibraryScreen.routeName: (ctx) => const LibraryScreen(),
+            RegistrationScreen.routeName: (ctx) => const RegistrationScreen(),
+          },
         ),
-        home: const SplashScreen(),
-        routes: {
-          WelcomeScreen.routeName: (ctx) => const WelcomeScreen(),
-          SignInScreen.routeName: (ctx) => const SignInScreen(),
-          LogInScreen.routeName: (ctx) => const LogInScreen(),
-          TabsScreen.routeName: (ctx) => const TabsScreen(),
-          HomeScreen.routeName: (ctx) => const HomeScreen(),
-          ExploreScreen.routeName: (ctx) => const ExploreScreen(),
-          LibraryScreen.routeName: (ctx) => const LibraryScreen(),
-          RegistrationScreen.routeName: (ctx) => const RegistrationScreen(),
-        },
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:musium/helpers/http_exception.dart';
 import 'package:musium/screens/sign_in_screen.dart';
 import 'package:musium/screens/tabs_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
   String? _token;
@@ -60,6 +61,16 @@ class Auth with ChangeNotifier {
         ),
       );
       _username = username;
+      final prefs = await SharedPreferences.getInstance();
+      final userData = json.encode(
+        {
+          'token': _token,
+          'userId': _userId,
+          'expiryDate': _expiryDate!.toIso8601String(),
+          'username': _username,
+        },
+      );
+      prefs.setString('userData', userData);
       notifyListeners();
     } catch (error) {
       throw error;
@@ -100,22 +111,47 @@ class Auth with ChangeNotifier {
       responseData.forEach((bdNum, userInformation) {
         _username = userInformation['username'];
       });
+      final prefs = await SharedPreferences.getInstance();
+      final userData = json.encode(
+        {
+          'token': _token,
+          'userId': _userId,
+          'expiryDate': _expiryDate!.toIso8601String(),
+          'username': _username,
+        },
+      );
+      prefs.setString('userData', userData);
       notifyListeners();
     } catch (error) {
       throw error;
     }
   }
 
-  void logOut(BuildContext context) {
+  Future<bool> tryAutoLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('userData')) {
+      return false;
+    }
+    final extractedUserData = json.decode(prefs.getString('userData')!) as Map<String, dynamic>;
+    final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
+
+    if (expiryDate.isBefore(DateTime.now())) {
+       return false;
+    }
+    _token = extractedUserData['token'];
+    _userId = extractedUserData['userId'];
+    _expiryDate = expiryDate;
+    _username = extractedUserData['username'];
+    notifyListeners();
+    return true;
+  }
+
+  Future <void> logOut() async {
     _token = null;
     _expiryDate = null;
     _userId = null;
     _username = null;
-
-    Navigator.pushNamedAndRemoveUntil(
-        context,
-        SignInScreen.routeName,
-        ModalRoute.withName('/'),
-      );
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 }
