@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musium/screens/favorites_screen.dart';
 
 import 'package:musium/style/colors.dart';
 import 'package:musium/widgets/library_screen/library_function.dart';
@@ -13,6 +14,11 @@ class LibraryScreen extends StatefulWidget {
 }
 
 class _LibraryScreenState extends State<LibraryScreen> {
+
+  void _moveToFavoriteScreen() {
+    Navigator.of(context).pushNamed(FavoritesScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,21 +31,22 @@ class _LibraryScreenState extends State<LibraryScreen> {
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   // header
-                  SimpleHeader(
+                  const SimpleHeader(
                     text: 'Your Library',
                   ),
-                  SizedBox(height: 15),
-                  Divider(
+                  const SizedBox(height: 15),
+                  const Divider(
                     color: AppColors.lightBlue,
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
 
                   //
                   LibraryFunction(
                     iconPath: 'assets/icons/love.svg',
                     title: 'Your Liked Songs',
+                    function: _moveToFavoriteScreen,
                   ),
                   SizedBox(height: 15),
 

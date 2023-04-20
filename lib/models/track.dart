@@ -11,6 +11,7 @@ class TrackItem {
   final String category;
   final String trackURL;
   final String coverURL;
+  bool isFavorite;
 
   TrackItem({
     required this.id,
@@ -19,11 +20,12 @@ class TrackItem {
     required this.category,
     required this.trackURL,
     required this.coverURL,
+    this.isFavorite = false,
   });
 }
 
 class Track with ChangeNotifier {
-  static List _tracks = [
+  static List<TrackItem> _tracks = [
     // TrackItem(
     //   id: '1',
     //   title: 'Tropical Soul',
@@ -99,6 +101,10 @@ class Track with ChangeNotifier {
 
   List get tracks {
     return _tracks;
+  }
+
+  List<TrackItem> get favoriteTracks{
+    return _tracks.where((track) => track.isFavorite).toList();
   }
 
   List categoriesTracks(String category) {

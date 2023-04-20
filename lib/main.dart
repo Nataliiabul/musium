@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:musium/screens/favorites_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:musium/models/auth.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
             ExploreScreen.routeName: (ctx) => const ExploreScreen(),
             LibraryScreen.routeName: (ctx) => const LibraryScreen(),
             RegistrationScreen.routeName: (ctx) => const RegistrationScreen(),
+            FavoritesScreen.routeName: (ctx) => const FavoritesScreen(),
           },
         ),
       ),
