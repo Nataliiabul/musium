@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:musium/models/auth.dart';
 
 import 'package:musium/models/track.dart';
 
 import 'package:musium/style/colors.dart';
 import 'package:musium/style/regular_text.dart';
+import 'package:provider/provider.dart';
 
 class SongScreen extends StatefulWidget {
   static const routeName = '/song';
@@ -133,10 +135,20 @@ class _SongScreenState extends State<SongScreen> {
                       ),
                       const SizedBox(width: 0),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            Provider.of<Track>(context, listen: false)
+                                .toggleFavoriteStatus(
+                                    Provider.of<Auth>(context, listen: false)
+                                        .userId,
+                                    widget.track);
+                          });
+                        },
                         iconSize: 35,
-                        icon: const Icon(
-                          Icons.favorite_outline,
+                        icon: Icon(
+                          widget.track.isFavorite
+                              ? Icons.favorite
+                              : Icons.favorite_outline,
                           color: AppColors.activeSliderColor,
                         ),
                       ),

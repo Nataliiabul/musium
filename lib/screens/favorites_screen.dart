@@ -48,7 +48,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        SimpleHeader(text: 'Your Liked Songs'),
+                        const SimpleHeader(text: 'Your Liked Songs'),
                       ],
                     ),
                     const SizedBox(height: 30),

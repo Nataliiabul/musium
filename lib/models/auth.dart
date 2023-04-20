@@ -19,6 +19,10 @@ class Auth with ChangeNotifier {
     return _username ?? 'unknown';
   }
 
+  String get userId {
+    return _userId ?? 'unknown';
+  }
+
   Future<void> registration(
       String username, String email, String password) async {
     var url = Uri.parse(

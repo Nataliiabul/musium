@@ -31,7 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _isLoading = true;
     });
-    await Provider.of<Track>(context, listen: false).fetchAndSetTracks();
+    await Provider.of<Track>(context, listen: false).fetchAndSetTracks(
+      Provider.of<Auth>(context, listen: false).userId,
+    );
     setState(() {
       _isLoading = false;
     });
@@ -52,7 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // header home screen
-                  HeaderHomeScreen(username: Provider.of<Auth>(context).userName),
+                  HeaderHomeScreen(
+                      username: Provider.of<Auth>(context).userName),
                   const SizedBox(height: 40),
 
                   // title

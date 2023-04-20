@@ -103,8 +103,26 @@ class Track with ChangeNotifier {
     return _tracks;
   }
 
-  List<TrackItem> get favoriteTracks{
+  List<TrackItem> get favoriteTracks {
     return _tracks.where((track) => track.isFavorite).toList();
+  }
+
+  Future<void> toggleFavoriteStatus(String userId, TrackItem tracksItem) async {
+    // final oldStatus = isFavorite;
+    tracksItem.isFavorite = !tracksItem.isFavorite;
+    notifyListeners();
+    final url = Uri.parse(
+        '${dotenv.env['REALTIMEDATABASE']}users/$userId/favorites/${tracksItem.id}.json');
+    try {
+      final response = await http.put(
+        url,
+        body: json.encode(tracksItem.isFavorite),
+      );
+      // if (response.statusCode >= 400) {
+      //   _setFavoriteValue(oldStatus);}
+    } catch (error) {
+      // _setFavoriteValue(oldStatus);
+    }
   }
 
   List categoriesTracks(String category) {
@@ -121,12 +139,16 @@ class Track with ChangeNotifier {
         .toList();
   }
 
-  Future<void> fetchAndSetTracks() async {
-    final url = Uri.parse('${dotenv.env['REALTIMEDATABASE']}tracks.json');
+  Future<void> fetchAndSetTracks(String userId) async {
+    var url = Uri.parse('${dotenv.env['REALTIMEDATABASE']}tracks.json');
     try {
-      final response = await http.get(url);
+      var response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
+      url = Uri.parse(
+          '${dotenv.env['REALTIMEDATABASE']}users/$userId/favorites.json');
+      response = await http.get(url);
+      final favoritesData = json.decode(response.body);
       final List<TrackItem> loadedTracks = [];
       extractedData.forEach(
         (trackId, trackItem) {
@@ -138,6 +160,8 @@ class Track with ChangeNotifier {
               category: trackItem['category'],
               trackURL: trackItem['trackURL'],
               coverURL: trackItem['coverURL'],
+              isFavorite:
+                  favoritesData == null ? false : favoritesData[trackId] ?? false,
             ),
           );
         },
