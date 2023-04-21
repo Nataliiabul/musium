@@ -108,7 +108,6 @@ class Track with ChangeNotifier {
   }
 
   Future<void> toggleFavoriteStatus(String userId, TrackItem tracksItem) async {
-    // final oldStatus = isFavorite;
     tracksItem.isFavorite = !tracksItem.isFavorite;
     notifyListeners();
     final url = Uri.parse(
@@ -117,11 +116,9 @@ class Track with ChangeNotifier {
       final response = await http.put(
         url,
         body: json.encode(tracksItem.isFavorite),
-      );
-      // if (response.statusCode >= 400) {
-      //   _setFavoriteValue(oldStatus);}
+      ); 
     } catch (error) {
-      // _setFavoriteValue(oldStatus);
+      throw error;
     }
   }
 

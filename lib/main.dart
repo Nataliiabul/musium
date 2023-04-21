@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:musium/models/system.dart';
 import 'package:musium/screens/favorites_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -29,42 +30,67 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // ChangeNotifierProvider(
+        //   create: (ctx) => System(),
+        // ),
         ChangeNotifierProvider(
           create: (ctx) => Track(),
         ),
         ChangeNotifierProvider(
           create: (ctx) => Auth(),
-        )
-      ],
-      child: Consumer<Auth>(
-        builder: (ctx, auth, _) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.grey,
-          ),
-          home: auth.isAuth
-              ? const TabsScreen()
-              : FutureBuilder(
-                future: auth.tryAutoLogin(),
-                  builder: (ctx, authResultSnapshot) =>
-                      authResultSnapshot.connectionState ==
-                              ConnectionState.waiting
-                          ? SplashScreen()
-                          : SignInScreen(),),
-          routes: {
-            WelcomeScreen.routeName: (ctx) => const WelcomeScreen(),
-            SignInScreen.routeName: (ctx) => const SignInScreen(),
-            LogInScreen.routeName: (ctx) => const LogInScreen(),
-            TabsScreen.routeName: (ctx) => const TabsScreen(),
-            HomeScreen.routeName: (ctx) => const HomeScreen(),
-            ExploreScreen.routeName: (ctx) => const ExploreScreen(),
-            LibraryScreen.routeName: (ctx) => const LibraryScreen(),
-            RegistrationScreen.routeName: (ctx) => const RegistrationScreen(),
-            FavoritesScreen.routeName: (ctx) => const FavoritesScreen(),
-          },
         ),
-      ),
+      ],
+      child: ChangeNotifierProvider<System>(
+          create: (context) => System(),
+          builder: (context, child) {
+            return Consumer<Auth>(
+              builder: (ctx, auth, _) => MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Flutter Demo',
+                theme: ThemeData(
+                  primarySwatch: Colors.grey,
+                ),
+                home: auth.isAuth
+                    ? const TabsScreen()
+                    : FutureBuilder(
+                        future: auth.tryAutoLogin(),
+                        builder: (ctx, authResultSnapshot) {
+                          if (authResultSnapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return SplashScreen();
+                          } else {
+                            return FutureBuilder<bool>(
+                              future: Provider.of<System>(context).isFirst(),
+                              builder: (ctx, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return SplashScreen();
+                                } else if (snapshot.hasData &&
+                                    snapshot.data == true) {
+                                  return SignInScreen();
+                                } else {
+                                  return WelcomeScreen();
+                                }
+                              },
+                            );
+                          }
+                        },
+                      ),
+                routes: {
+                  WelcomeScreen.routeName: (ctx) => const WelcomeScreen(),
+                  SignInScreen.routeName: (ctx) => const SignInScreen(),
+                  LogInScreen.routeName: (ctx) => const LogInScreen(),
+                  TabsScreen.routeName: (ctx) => const TabsScreen(),
+                  HomeScreen.routeName: (ctx) => const HomeScreen(),
+                  ExploreScreen.routeName: (ctx) => const ExploreScreen(),
+                  LibraryScreen.routeName: (ctx) => const LibraryScreen(),
+                  RegistrationScreen.routeName: (ctx) =>
+                      const RegistrationScreen(),
+                  FavoritesScreen.routeName: (ctx) => const FavoritesScreen(),
+                },
+              ),
+            );
+          }),
     );
   }
 }

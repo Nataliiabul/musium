@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:musium/models/system.dart';
 
 import 'package:musium/style/colors.dart';
 
 import 'package:musium/widgets/welcome_screen/card_welcome_screen.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const routeName = '/welcome';
@@ -13,6 +15,25 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+
+  late System system;
+
+  @override
+  void initState() {
+    super.initState();
+    system = Provider.of<System>(context, listen: false);
+  }
+
+  @override
+  void dispose() {
+    setSystemData();
+    super.dispose();
+  }
+
+  Future<void> setSystemData () async {
+    await system.setFirstLoading();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

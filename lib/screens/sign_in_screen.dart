@@ -19,6 +19,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+
   void toWelcomeScreen() {
     Navigator.of(context).pop();
   }
@@ -30,6 +31,8 @@ class _SignInScreenState extends State<SignInScreen> {
   void toRegistration() {
     Navigator.of(context).pushNamed(RegistrationScreen.routeName);
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
