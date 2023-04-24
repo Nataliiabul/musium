@@ -26,6 +26,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   void dispose() {
+    print('d');
     setSystemData();
     super.dispose();
   }
