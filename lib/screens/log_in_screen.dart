@@ -82,7 +82,6 @@ class _LogInScreenState extends State<LogInScreen> {
                   ),
                   SizedBox(height: constraints.maxHeight * 0.04),
 
-                  
                   // fields
                   FormData(isRegistration: false, width: constraints.maxWidth),
                   const SizedBox(height: 15),
@@ -93,7 +92,15 @@ class _LogInScreenState extends State<LogInScreen> {
 
                   // forgot password
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          duration: Duration(milliseconds: 1200),
+                          content: Text('The function has not been added yet'),
+                        ),
+                      );
+                    },
                     child: const Text(
                       'Forgot the password?',
                       style: TextStyle(
