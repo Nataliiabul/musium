@@ -126,7 +126,16 @@ class _SongScreenState extends State<SongScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              duration: Duration(milliseconds: 1200),
+                              content:
+                                  Text('The function has not been added yet'),
+                            ),
+                          );
+                        },
                         iconSize: 35,
                         icon: const Icon(
                           Icons.share_outlined,
@@ -216,7 +225,16 @@ class _SongScreenState extends State<SongScreen> {
                       // previous track
                       IconButton(
                         padding: const EdgeInsets.all(0),
-                        onPressed: () {},
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              duration: Duration(milliseconds: 1200),
+                              content:
+                                  Text('The function has not been added yet'),
+                            ),
+                          );
+                        },
                         icon: SvgPicture.asset(
                           'assets/icons/back_track.svg',
                           width: 20,
@@ -269,7 +287,16 @@ class _SongScreenState extends State<SongScreen> {
 
                       // next track
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              duration: Duration(milliseconds: 1200),
+                              content:
+                                  Text('The function has not been added yet'),
+                            ),
+                          );
+                        },
                         icon: SvgPicture.asset(
                           'assets/icons/next_track.svg',
                           width: 20,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:musium/models/system.dart';
 
 import 'package:musium/style/colors.dart';
 import 'package:musium/style/regular_text.dart';
+import 'package:provider/provider.dart';
 
 class ContinueWithButton extends StatelessWidget {
   const ContinueWithButton({
@@ -25,22 +27,33 @@ class ContinueWithButton extends StatelessWidget {
         border: Border.all(width: 1, color: AppColors.borderButtonColor),
         color: AppColors.buttonFillColor,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            height: 33,
-            width: 33,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(imgPath),
-                fit: BoxFit.fitHeight,
+      child: GestureDetector(
+        onTap: () {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              duration: Duration(milliseconds: 1200),
+              content: Text('The function has not been added yet'),
+            ),
+          );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 33,
+              width: 33,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(imgPath),
+                  fit: BoxFit.fitHeight,
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: 10),
-          RegularText(text: text)
-        ],
+            const SizedBox(width: 10),
+            RegularText(text: text)
+          ],
+        ),
       ),
     );
   }

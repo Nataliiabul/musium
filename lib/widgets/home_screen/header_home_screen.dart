@@ -40,12 +40,29 @@ class HeaderHomeScreen extends StatelessWidget {
         ),
         Expanded(child: Container()),
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  duration: Duration(milliseconds: 1200),
+                  content: Text('The function has not been added yet'),
+                ),
+              );
+            },
             icon: SvgPicture.asset(
               'assets/icons/bar-2.svg',
             )),
         IconButton(
-            onPressed: () {}, icon: SvgPicture.asset('assets/icons/bell.svg')),
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  duration: Duration(milliseconds: 1200),
+                  content: Text('The function has not been added yet'),
+                ),
+              );
+            },
+            icon: SvgPicture.asset('assets/icons/bell.svg')),
         PopupMenuButton(
           itemBuilder: (context) {
             return [

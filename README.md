@@ -1,16 +1,39 @@
-# musium
+# Musium
+A Flutter app to listen music.
+[New features will be added in the future]
 
-A new Flutter project.
+## Features
+* Welcome screen
+* Splash screen
+* Registration
+* Authorization
+* Auto account authorization
+* Data from the Firebase
+* Song categories
+* Search songs
+* Favorite songs
+* Play/stop music
 
-## Getting Started
+## Packages
+* flutter_svg: [link](https://pub.dev/packages/flutter_svg)
+* provider: [link](https://pub.dev/packages/provider)
+* audioplayers: [link](https://pub.dev/packages/audioplayers)
+* http: [link](https://pub.dev/packages/http)
+* flutter_dotenv: [link](https://pub.dev/packages/flutter_dotenv)
+* shared_preferences: [link](https://pub.dev/packages/shared_preferences)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Screenshots
+<img src="assets/images/screens/screen1.png" height="400"></img>
+<img src="assets/images/screens/screen2.png" height="400"></img>
+<img src="assets/images/screens/screen3.png" height="400"></img>
+<img src="assets/images/screens/screen4.png" height="400"></img>
+<img src="assets/images/screens/screen5.png" height="400"></img>
+<img src="assets/images/screens/screen6.png" height="400"></img>
+<img src="assets/images/screens/screen7.png" height="400"></img>
+<img src="assets/images/screens/screen8.png" height="400"></img>
+<img src="assets/images/screens/screen9.png" height="400"></img>
+<img src="assets/images/screens/screen10.png" height="400"></img>
+<img src="assets/images/screens/screen11.png" height="400"></img>
+<img src="assets/images/screens/screen12.png" height="400"></img>
+<img src="assets/images/screens/screen13.png" height="400"></img>
+<img src="assets/images/screens/screen14.png" height="400"></img>
